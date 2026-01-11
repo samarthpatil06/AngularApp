@@ -1,0 +1,41 @@
+<div class="content">
+
+  <!-- Header Row -->
+  <div class="section-header">
+    <span>DEVICES</span>
+    <button class="add-btn" (click)="openAddDevice()">ADD</button>
+  </div>
+
+  <!-- Empty State -->
+  <div class="empty" *ngIf="devices.length === 0">
+    You currently have no registered devices
+  </div>
+
+  <!-- Devices List -->
+  <div class="table" *ngIf="devices.length > 0">
+    <div class="table-header">
+      <span>MAC ID</span>
+      <span>Name</span>
+      <span>Group</span>
+      <span>Device ID</span>
+      <span>Loc. ID</span>
+      <span></span>
+    </div>
+
+    <div class="table-row" *ngFor="let d of devices">
+      <span>{{ d.macId }}</span>
+      <span>{{ d.name }}</span>
+      <span>{{ d.group }}</span>
+      <span>{{ d.deviceId }}</span>
+      <span>{{ d.locationId }}</span>
+      <button class="edit-btn">EDIT</button>
+    </div>
+  </div>
+
+</div>
+
+<app-add-device
+  *ngIf="showAddModal"
+  (close)="closeAddDevice()"
+  (save)="addDevice($event)">
+</app-add-device>

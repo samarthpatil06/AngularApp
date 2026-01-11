@@ -1,0 +1,18 @@
+<div class="overlay">
+  <div class="modal">
+
+    <div class="modal-title">ADD DEVICE</div>
+
+    <input placeholder="DEVICE MAC ID" [(ngModel)]="device.macId" />
+    <input placeholder="DEVICE NAME" [(ngModel)]="device.name" />
+    <input placeholder="GROUP" [(ngModel)]="device.group" />
+    <input placeholder="DEVICE ID" [(ngModel)]="device.deviceId" />
+    <input placeholder="LOCATION ID" [(ngModel)]="device.locationId" />
+
+    <div class="actions">
+      <button (click)="submit()">SAVE</button>
+      <button class="cancel" (click)="close.emit()">CANCEL</button>
+    </div>
+
+  </div>
+</div>
