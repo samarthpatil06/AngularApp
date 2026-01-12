@@ -1,0 +1,13 @@
+# Node dependencies (ignore everywhere)
+node_modules/
+
+# Logs
+npm-debug.log*
+yarn-error.log*
+
+# Environment files
+.env
+
+# Build output
+dist/
+.angular/
