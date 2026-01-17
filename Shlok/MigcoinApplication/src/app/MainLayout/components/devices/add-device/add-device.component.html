@@ -1,0 +1,51 @@
+<div class="overlay">
+  <div class="modal">
+
+    <div class="modal-title">ADD DEVICE</div>
+
+    <input placeholder="DEVICE MAC ID" [(ngModel)]="device.macId" disabled />
+    <input placeholder="DEVICE ID" [(ngModel)]="device.deviceId" />
+    <input placeholder="DEVICE NAME" [(ngModel)]="device.name" />
+
+
+
+    <input
+      type="number"
+      min="1"
+      max="8"
+      placeholder="NUMBER OF CHANNELS (1-8)"
+      [(ngModel)]="device.channelCount"
+      (change)="updateChannels()"
+    />
+
+    <div *ngFor="let ch of device.channels">
+      <div class="channel-title">CHANNEL {{ ch.channelNo }}</div>
+
+
+      <input type="number" placeholder="MIN RANGE" [(ngModel)]="ch.minRange" />
+      <input type="number" placeholder="MAX RANGE" [(ngModel)]="ch.maxRange" />
+     <select [(ngModel)]="ch.unit">
+  <option value="">Unit</option>
+  <option>°C</option>
+
+  <option>V/mV</option>
+  <option>mA/A</option>
+  <option>mbar</option>
+  <option>Lux</option>
+  <option>UL</option>
+  <option>ppm</option>
+  <option>bar</option>
+  <option>pH</option>
+  <option>uSiemens/mSiemens</option>
+</select>
+
+
+    </div>
+
+    <div class="actions">
+      <button (click)="submit()">SAVE</button>
+      <button class="cancel" (click)="close.emit()">CANCEL</button>
+    </div>
+
+  </div>
+</div>
