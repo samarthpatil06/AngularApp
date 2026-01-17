@@ -1,14 +1,8 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AddDeviceComponent } from './add-device/add-device.component';
+import { DeviceModelService } from '../../../services/device-model.service';
 
-export interface Device {
-  macId: string;
-  name: string;
-  group: string;
-  deviceId: string;
-  locationId: string;
-}
 
 @Component({
   selector: 'app-devices',
@@ -19,9 +13,12 @@ export interface Device {
 })
 export class DevicesComponent {
 
-  devices: Device[] = [];
+  // This now correctly represents Device MODELS
+  deviceModels: any[] = [];
 
   showAddModal = false;
+
+  constructor(private deviceModelService: DeviceModelService) {}
 
   openAddDevice(): void {
     this.showAddModal = true;
@@ -31,8 +28,21 @@ export class DevicesComponent {
     this.showAddModal = false;
   }
 
-  addDevice(device: Device): void {
-    this.devices.push(device);
-    this.closeAddDevice();
+  // Called when AddDeviceComponent emits SAVE
+  addDevice(deviceModel: any): void {
+    this.deviceModelService.addDeviceModel(deviceModel).subscribe({
+      next: (res) => {
+        console.log('Device model saved:', res);
+
+        // 🔹 Visual feedback in frontend
+        this.deviceModels.push(res.data);
+
+        this.closeAddDevice();
+      },
+      error: (err) => {
+        console.error('Failed to save device model', err);
+        alert('Failed to add device model');
+      }
+    });
   }
 }

@@ -2,33 +2,27 @@
 
   <!-- Header Row -->
   <div class="section-header">
-    <span>DEVICES</span>
-    <button class="add-btn" (click)="openAddDevice()">ADD</button>
+    <span>DEVICE MODELS</span>
+    <button class="add-btn" (click)="openAddDevice()">ADD DEVICE MODEL</button>
   </div>
 
   <!-- Empty State -->
-  <div class="empty" *ngIf="devices.length === 0">
-    You currently have no registered devices
+  <div class="empty" *ngIf="deviceModels.length === 0">
+    You currently have no device models
   </div>
 
-  <!-- Devices List -->
-  <div class="table" *ngIf="devices.length > 0">
+  <!-- Device Models List -->
+  <div class="table" *ngIf="deviceModels.length > 0">
     <div class="table-header">
-      <span>MAC ID</span>
-      <span>Name</span>
-      <span>Group</span>
-      <span>Device ID</span>
-      <span>Loc. ID</span>
-      <span></span>
+      <span>MODEL CODE</span>
+      <span>MODEL NAME</span>
+      <span>CHANNELS</span>
     </div>
 
-    <div class="table-row" *ngFor="let d of devices">
-      <span>{{ d.macId }}</span>
-      <span>{{ d.name }}</span>
-      <span>{{ d.group }}</span>
-      <span>{{ d.deviceId }}</span>
-      <span>{{ d.locationId }}</span>
-      <button class="edit-btn">EDIT</button>
+    <div class="table-row" *ngFor="let model of deviceModels">
+      <span>{{ model.modelCode }}</span>
+      <span>{{ model.modelName }}</span>
+      <span>{{ model.numberOfChannels }}</span>
     </div>
   </div>
 

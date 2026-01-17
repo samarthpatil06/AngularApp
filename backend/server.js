@@ -1,7 +1,9 @@
 const express = require('express');
 const cors = require('cors');
 const mongoose = require('mongoose');
-const User = require('./models/User'); // 👈 ADDED
+const User = require('./models/User'); 
+const DeviceModel = require('./models/DeviceModel');
+
 
 const app = express();
 app.use(cors());
@@ -38,6 +40,40 @@ app.post('/api/login', async (req, res) => {
     return res.status(500).json({ message: 'Server error' });
   }
 });
+
+// 🔹 ADD DEVICE MODEL
+app.post('/api/device-models', async (req, res) => {
+  try {
+    const deviceModel = new DeviceModel(req.body);
+    await deviceModel.save();
+
+    res.status(201).json({
+      message: 'Device model added successfully',
+      data: deviceModel
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(400).json({
+      message: 'Failed to add device model',
+      error: error.message
+    });
+  }
+});
+
+// 🔹 GET DEVICE MODELS
+app.get('/api/device-models', async (req, res) => {
+  try {
+    const models = await DeviceModel.find();
+    res.status(200).json(models);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({
+      message: 'Failed to fetch device models'
+    });
+  }
+});
+
+
 
 // 🔹 TEST ROUTE
 app.post('/api/test', (req, res) => {

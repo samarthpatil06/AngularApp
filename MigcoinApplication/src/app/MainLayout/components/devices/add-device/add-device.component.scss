@@ -11,9 +11,11 @@
 .modal {
   background: #fff;
   width: 90%;
-  max-width: 320px;
+  max-width: 340px;
   padding: 1rem;
   border-radius: 6px;
+  max-height: 90vh;
+  overflow-y: auto;
 }
 
 .modal-title {
@@ -25,16 +27,23 @@
   margin-bottom: 0.75rem;
 }
 
-input {
+input, select {
   width: 100%;
   padding: 0.4rem;
   margin-bottom: 0.5rem;
   font-size: 0.7rem;
 }
 
+.channel-title {
+  font-size: 0.7rem;
+  font-weight: 600;
+  margin-top: 0.5rem;
+}
+
 .actions {
   display: flex;
   justify-content: space-between;
+  margin-top: 0.75rem;
 }
 
 button {
