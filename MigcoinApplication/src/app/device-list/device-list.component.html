@@ -1,0 +1,15 @@
+<div class="device-container">
+  <!-- <h2>Available Device Models</h2> -->
+  
+  <div *ngIf="deviceModels.length === 0">
+    <p>Loading...</p>
+  </div>
+
+  <ul>
+    <li *ngFor="let model of deviceModels">
+      <strong>{{ model.modelName }}</strong> ({{ model.modelCode }})
+      <br>
+      <small>Channels: {{ model.numberOfChannels }}</small>
+    </li>
+  </ul>
+</div>

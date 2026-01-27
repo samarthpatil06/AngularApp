@@ -21,14 +21,14 @@ export const routes: Routes = [
     children: [
       {
         path: 'dashboard',
-         data: { title: 'Dashboard' },
+        data: { title: 'Dashboard' },
         loadComponent: () =>
           import('./MainLayout/components/dashboard/dashboard.component')
             .then(m => m.DashboardComponent)
       },
       {
         path: 'view',
-         data: { title: 'View' },
+        data: { title: 'View' },
         loadComponent: () =>
           import('./MainLayout/components/view/view.component')
             .then(m => m.ViewComponent)
@@ -43,10 +43,18 @@ export const routes: Routes = [
       {
         path: 'accounts',
         data: { title: 'Manage Account' },
-        loadComponent: ()=>
+        loadComponent: () =>
           import('./MainLayout/components/accounts/accounts.component')
-           .then(m => m.AccountsComponent)
-      }
+            .then(m => m.AccountsComponent)
+      },
+      {
+        path: 'device-list',
+        data: { title: 'Device Models List' },
+        loadComponent: () =>
+          import('./device-list/device-list.component')
+            .then(m => m.DeviceListComponent)
+      },
+      
     ]
   }
 ];

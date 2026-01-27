@@ -1,136 +1,315 @@
 .login-wrapper {
-  // border : 2px solid yellow;
   min-height: 100vh;
+  padding-top: 70px; // Account for fixed header
   display: flex;
   align-items: center;
   justify-content: center;
   background-color: #002b4f;
-  padding: 1rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  padding-bottom: 1rem;
+  box-sizing: border-box;
 }
 
 .login-card {
-  //  border : 2px solid yellow;
-   margin-top: 2%;
   width: 100%;
-  max-width: 360px;
-  display: flex;
-  justify-content: center;
-}
-
-
-.logo-section {
-  margin-bottom: 2rem;
-
-  img {
-    max-width: 160px;
-    margin-bottom: 0.25rem;
-  }
-
-  .tagline {
-    display: block;
-    font-size: 0.7rem;
-    letter-spacing: 1px;
-    color: #cfd8dc;
-  }
+  max-width: 420px;
+  background-color: rgba(255, 255, 255, 0.05);
+  padding: 2.5rem 2rem;
+  border-radius: 24px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(10px);
+  box-sizing: border-box;
 }
 
 form {
-  margin-top: 5%;
   width: 100%;
 }
 
 .form-group {
   position: relative;
-  margin-bottom: 1rem;
+  margin-bottom: 1.25rem;
 
   input {
     width: 100%;
-    height: 44px;
-    border-radius: 22px;
-    border: none;
-    padding: 0 1rem 0 2.75rem;
-    font-size: 0.9rem;
+    height: 50px;
+    border-radius: 25px;
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    background-color: rgba(255, 255, 255, 0.95);
+    padding: 0 1.25rem 0 3rem;
+    font-size: 0.95rem;
     outline: none;
     box-sizing: border-box;
+    transition: all 0.3s ease;
+
+    &:focus {
+      border-color: rgba(255, 255, 255, 0.3);
+      background-color: #ffffff;
+      box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.1);
+    }
+
+    &::placeholder {
+      color: #90a4ae;
+    }
   }
 
   .icon {
     position: absolute;
     top: 50%;
-    left: 1rem;
+    left: 1.25rem;
     transform: translateY(-50%);
-    font-size: 1rem;
+    font-size: 1.1rem;
     color: #607d8b;
     pointer-events: none;
+    z-index: 1;
   }
 }
 
+.password-field {
+  input {
+    padding-right: 3.5rem;
+  }
+}
+
+.toggle-password {
+  position: absolute;
+  right: 1.25rem;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0.5rem;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: background-color 0.2s ease;
+
+  &:hover {
+    background-color: rgba(0, 0, 0, 0.05);
+  }
+
+  &:active {
+    background-color: rgba(0, 0, 0, 0.1);
+  }
+
+  .password-icon {
+    width: 22px;
+    height: 22px;
+    display: block;
+    object-fit: contain;
+    opacity: 0.6;
+    transition: opacity 0.2s ease;
+  }
+
+  &:hover .password-icon {
+    opacity: 0.8;
+  }
+}
 
 .options {
   display: flex;
   align-items: center;
-  margin: 0.5rem 0 1.5rem;
+  margin: 0 0 1.75rem;
 
   .checkbox {
     display: flex;
     align-items: center;
-    font-size: 0.8rem;
+    font-size: 1rem;
+    cursor: pointer;
+    user-select: none;
 
     input {
-      margin-right: 0.5rem;
+      margin-right: 0.6rem;
+      cursor: pointer;
+      width: 18px;
+      height: 18px;
+      accent-color: #ffffff;
     }
   }
 }
 
 .btn {
   width: 100%;
-  height: 44px;
-  border-radius: 22px;
-  font-size: 0.9rem;
+  height: 50px;
+  border-radius: 25px;
+  font-size: 0.95rem;
+  font-weight: 700;
+  letter-spacing: 1px;
   border: none;
   cursor: pointer;
-  margin-bottom: 1rem;
+  margin-bottom: 1.5rem;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+  }
+
+  &:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  }
 
   &.primary {
     background-color: #ffffff;
     color: #002b4f;
-    font-weight: 600;
   }
 
   &.secondary {
     background-color: #ffffff;
     color: #002b4f;
-    font-weight: 600;
   }
 }
 
 .link {
   display: block;
-  font-size: 0.8rem;
+  font-size: 1rem;
   margin-bottom: 1.5rem;
   color: #ffffff;
-  text-decoration: underline;
+  text-decoration: none;
+  text-align: center;
+  transition: opacity 0.2s ease;
+  border-bottom: 1px solid transparent;
+
+  &:hover {
+    opacity: 0.8;
+    border-bottom-color: #ffffff;
+  }
 }
 
 .footer-note {
   font-size: 0.7rem;
   opacity: 0.8;
 }
+
 .smp {
   color: white;
 }
 
-/* Mobile Enhancements */
-@media (max-width: 480px) {
-  .login-card {
-    max-width: 100%;
+/* Tablet Responsiveness */
+@media (max-width: 768px) {
+  .login-wrapper {
+    padding-top: 64px;
   }
 
-  .logo-section img {
-    max-width: 140px;
+  .login-card {
+    max-width: 90%;
+    padding: 2rem 1.75rem;
   }
 }
 
+/* Mobile Responsiveness */
+@media (max-width: 480px) {
+  .login-wrapper {
+    padding-top: 56px;
+    padding-left: 0.75rem;
+    padding-right: 0.75rem;
+  }
 
+  .login-card {
+    max-width: 100%;
+    padding: 1.75rem 1.5rem;
+    border-radius: 20px;
+  }
 
+  .form-group {
+    margin-bottom: 1rem;
 
+    input {
+      height: 46px;
+      font-size: 0.9rem;
+      padding: 0 1rem 0 2.75rem;
+    }
+
+    .icon {
+      left: 1rem;
+      font-size: 1rem;
+    }
+  }
+
+  .password-field input {
+    padding-right: 3rem;
+  }
+
+  .toggle-password {
+    right: 1rem;
+    padding: 0.4rem;
+
+    .password-icon {
+      width: 20px;
+      height: 20px;
+    }
+  }
+
+  .options {
+    margin: 0 0 1.5rem;
+
+    .checkbox {
+      font-size: 0.8rem;
+
+      input {
+        width: 16px;
+        height: 16px;
+      }
+    }
+  }
+
+  .btn {
+    height: 46px;
+    font-size: 0.9rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .link {
+    font-size: 0.8rem;
+  }
+}
+
+/* Small Mobile Devices */
+@media (max-width: 360px) {
+  .login-wrapper {
+    padding-top: 52px;
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+  }
+
+  .login-card {
+    padding: 1.5rem 1.25rem;
+    border-radius: 18px;
+  }
+
+  .form-group input {
+    height: 44px;
+    font-size: 0.85rem;
+  }
+
+  .btn {
+    height: 44px;
+    font-size: 0.85rem;
+  }
+}
+
+/* Extra Small Mobile */
+@media (max-width: 320px) {
+  .login-wrapper {
+    padding-top: 48px;
+  }
+
+  .login-card {
+    padding: 1.25rem 1rem;
+  }
+
+  .form-group input {
+    height: 42px;
+    font-size: 0.8rem;
+  }
+
+  .btn {
+    height: 42px;
+    font-size: 0.8rem;
+  }
+}

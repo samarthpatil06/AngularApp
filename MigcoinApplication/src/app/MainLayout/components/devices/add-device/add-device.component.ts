@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, Output, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
@@ -9,12 +9,11 @@ import { FormsModule } from '@angular/forms';
   templateUrl: './add-device.component.html',
   styleUrl: './add-device.component.scss'
 })
-export class AddDeviceComponent {
+export class AddDeviceComponent implements OnInit {
 
   @Output() close = new EventEmitter<void>();
   @Output() save = new EventEmitter<any>();
 
-  // 🔒 Backend-aligned unit contract (DO NOT CHANGE casually)
   readonly ALLOWED_UNITS: string[] = [
     '°C',
     'V/mV',
@@ -29,7 +28,9 @@ export class AddDeviceComponent {
     'cm/m'
   ];
 
-  // Backend-aligned DeviceModel structure
+  // 🔥 Dropdown options for channels (1-8)
+  readonly CHANNEL_OPTIONS: number[] = [1, 2, 3, 4, 5, 6, 7, 8];
+
   device = {
     modelCode: '',
     modelName: '',
@@ -40,15 +41,17 @@ export class AddDeviceComponent {
       rangeHigh: number | null;
       unit: string;
     }[],
-
-    // UI-only (future use)
     macId: '',
     locationId: ''
   };
 
-  updateChannels(): void {
-    this.device.channels = [];
+  ngOnInit(): void {
+    this.updateChannels();
+  }
 
+  updateChannels(): void {
+    // Rebuild channels array
+    this.device.channels = [];
     for (let i = 1; i <= this.device.numberOfChannels; i++) {
       this.device.channels.push({
         channelNo: i,
@@ -60,10 +63,33 @@ export class AddDeviceComponent {
   }
 
   submit(): void {
-    // 🛡 sanity guard (peace of mind)
+    // Basic validation
+    if (!this.device.modelCode.trim()) {
+      alert('⚠️ Please enter Model Code');
+      return;
+    }
+
+    if (!this.device.modelName.trim()) {
+      alert('⚠️ Please enter Model Name');
+      return;
+    }
+
+    // Channel validation
     for (const ch of this.device.channels) {
+      if (!ch.unit) {
+        alert(`⚠️ Please select a unit for Channel ${ch.channelNo}`);
+        return;
+      }
       if (!this.ALLOWED_UNITS.includes(ch.unit)) {
         alert(`Invalid unit selected: ${ch.unit}`);
+        return;
+      }
+      if (ch.rangeLow === null || ch.rangeHigh === null) {
+        alert(`⚠️ Please enter range values for Channel ${ch.channelNo}`);
+        return;
+      }
+      if (ch.rangeLow >= ch.rangeHigh) {
+        alert(`⚠️ Min range must be less than Max range for Channel ${ch.channelNo}`);
         return;
       }
     }

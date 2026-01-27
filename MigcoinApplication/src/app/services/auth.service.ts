@@ -4,16 +4,19 @@ import { Router } from '@angular/router';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
-  private apiUrl = 'http://localhost:3000/api';
+  // private apiUrl = '/api';  //For Docker
+  private apiUrl = 'http://localhost:3000/api'; //For Local
 
   constructor(
     private http: HttpClient,
     private router: Router
-  ) {}
+  ) { }
+
 
   login(credentials: { email: string; password: string }) {
     return this.http.post<any>(`${this.apiUrl}/login`, credentials);
   }
+
 
   saveUser(user: any) {
     localStorage.setItem('user', JSON.stringify(user));

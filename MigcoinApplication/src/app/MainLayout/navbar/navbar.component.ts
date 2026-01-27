@@ -6,23 +6,27 @@ import { filter } from 'rxjs/operators';
 @Component({
   selector: 'app-navbar',
   standalone: true,
-  imports: [CommonModule,RouterModule],
+  imports: [CommonModule, RouterModule],
   templateUrl: './navbar.component.html',
   styleUrl: './navbar.component.scss'
 })
-export class NavbarComponent implements OnInit{
+export class NavbarComponent implements OnInit {
   title = '';
   isMenuOpen = false;
 
   menuItems = [
     { label: 'Manage Account', route: '/accounts' },
-    { label: 'Manage Devices', route: '/devices' }
+    { label: 'Manage Devices', route: '/devices' },
+    { label: 'Settings', route: '/settings' },
+    { label: 'Reports', route: '/reports' },
+    { label: 'Logout', route: '/logout' },
+    { label: 'Help', route: '/help' }
   ];
 
   constructor(
     private router: Router,
     private activatedRoute: ActivatedRoute
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.router.events
@@ -36,7 +40,7 @@ export class NavbarComponent implements OnInit{
     this.isMenuOpen = !this.isMenuOpen;
   }
 
-   private getRouteTitle(): string {
+  private getRouteTitle(): string {
     let route = this.activatedRoute.firstChild;
 
     while (route?.firstChild) {

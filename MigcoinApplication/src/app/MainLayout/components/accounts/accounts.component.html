@@ -1,58 +1,222 @@
+<!--
+  ========================================
+  ACCOUNTS COMPONENT TEMPLATE
+  ========================================
+  This component displays account and user
+  management information for administrators.
+-->
+
+<!--
+  MAIN CONTENT CONTAINER
+  <div class="content">
+-->
+
+<!--
+    ACCOUNT INFORMATION SECTION
+    Displays admin account details including:
+    - Admin Name
+    - Created Date
+    - Company Name
+    - Address
+    - Email
+    - Contact Information
+    - SMTP Configuration Button
+    
+    <div class="section">
+      <div class="section-header">ACCOUNT INFORMATION</div>
+
+      <div class="info-grid">
+        <div><strong>Admin Name</strong></div><div>amul</div>
+        <div><strong>Created</strong></div><div>Sun, 9 Jun 25</div>
+        <div><strong>Company</strong></div><div>ABC LTD</div>
+        <div><strong>Address</strong></div>
+        <div>
+          ABC Lane<br>
+          ABC Chowk<br>
+          PUNE INDIA
+        </div>
+        <div><strong>Email</strong></div><div>{{adminEmail}}</div>
+        <div><strong>Contact</strong></div><div>9898989898</div>
+      </div>
+
+      <button class="smtp-btn">SET SMTP</button>
+    </div>
+  -->
+
+<!--
+    USER INFORMATION SECTION
+    Displays a list of all users with their details and management options
+    
+    <div class="section">
+      
+      USER INFORMATION HEADER WITH ADD USER BUTTON
+      <div class="section-header user-header">
+        USER INFORMATION
+        <button class="add-btn" (click)="openAddUser()">ADD USER</button>
+      </div>
+
+      TABLE HEADER ROW
+      Displays column names for user data
+      <div class="table-header">
+        <span>Name</span>
+        <span>Email</span>
+        <span>Contact</span>
+        <span>Level</span>
+        <span>Sts</span>
+        <span></span>
+      </div>
+
+      USER DATA ROWS
+      Loops through users array and displays each user's information
+      - First Name and Last Name
+      - Email Address
+      - Phone Number
+      - User Role/Level
+      - Active/Inactive Status (with visual indicator)
+      - Edit Action Button
+      
+      <div class="table-row" *ngFor="let u of users">
+        <span>{{ u.firstName }} {{ u.lastName }}</span>
+        <span>{{ u.email }}</span>
+        <span>{{ u.phone }}</span>
+        <span>{{ u.role }}</span>
+        <span>
+          <span class="status" [class.active]="u.active"></span>
+        </span>
+        <button class="edit-btn">EDIT</button>
+      </div>
+    </div>
+  -->
+
+<!--
+  END MAIN CONTENT CONTAINER
+  </div>
+-->
+
+<!--
+  ADD USER MODAL/COMPONENT
+  Conditionally displays the add-user component when showAddUser is true
+  Emits 'save' event when user is added
+  Emits 'close' event to close the modal
+  
+  <app-add-user 
+    *ngIf="showAddUser" 
+    (save)="addUser($event)" 
+    (close)="closeAddUser()">
+  </app-add-user>
+-->
+
+<!--
+  END OF ACCOUNTS COMPONENT
+  Revised code by Samarth
+-->
+
 <div class="content">
 
+
+
   <!-- ACCOUNT INFORMATION -->
+
   <!-- <div class="section">
+
     <div class="section-header">ACCOUNT INFORMATION</div>
 
+
+
     <div class="info-grid">
+
       <div><strong>Admin Name</strong></div><div>amul</div>
+
       <div><strong>Created</strong></div><div>Sun, 9 Jun 25</div>
+
       <div><strong>Company</strong></div><div>ABC LTD</div>
+
       <div><strong>Address</strong></div>
+
       <div>
+
         ABC Lane<br>
+
         ABC Chowk<br>
+
         PUNE INDIA
+
       </div>
+
       <div><strong>Email</strong></div><div>{{adminEmail}}</div>
+
       <div><strong>Contact</strong></div><div>9898989898</div>
+
     </div>
+
+
 
     <button class="smtp-btn">SET SMTP</button>
+
   </div> -->
 
+
+
   <!-- USER INFORMATION -->
+
   <div class="section">
+
     <div class="section-header user-header">
+
       USER INFORMATION
+
       <button class="add-btn" (click)="openAddUser()">ADD USER</button>
+
     </div>
+
+
 
     <div class="table-header">
+
       <span>Name</span>
+
       <span>Email</span>
+
       <span>Contact</span>
+
       <span>Level</span>
+
       <span>Sts</span>
+
       <span></span>
+
     </div>
 
+
+
     <div class="table-row" *ngFor="let u of users">
+
       <span>{{ u.firstName }} {{ u.lastName }}</span>
+
       <span>{{ u.email }}</span>
+
       <span>{{ u.phone }}</span>
+
       <span>{{ u.role }}</span>
+
       <span>
+
         <span class="status" [class.active]="u.active"></span>
+
       </span>
+
       <button class="edit-btn">EDIT</button>
+
     </div>
+
   </div>
+
+
 
 </div>
 
-<app-add-user
-  *ngIf="showAddUser"
-  (save)="addUser($event)"
-  (close)="closeAddUser()">
+
+
+<app-add-user *ngIf="showAddUser" (save)="addUser($event)" (close)="closeAddUser()">
+
 </app-add-user>

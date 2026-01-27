@@ -1,48 +1,96 @@
 <div class="overlay">
   <div class="modal">
 
-    <div class="modal-title">ADD DEVICE MODEL</div>
-
-    <!-- UI-only (future use) -->
-    <input placeholder="DEVICE MAC ID" [(ngModel)]="device.macId" disabled />
-
-    <!-- Backend-aligned fields -->
-    <input placeholder="MODEL CODE" [(ngModel)]="device.modelCode" />
-    <input placeholder="MODEL NAME" [(ngModel)]="device.modelName" />
-
-    <input
-      type="number"
-      min="1"
-      max="8"
-      placeholder="NUMBER OF CHANNELS (1–8)"
-      [(ngModel)]="device.numberOfChannels"
-      (change)="updateChannels()"
-    />
-
-    <div *ngFor="let ch of device.channels">
-      <div class="channel-title">CHANNEL {{ ch.channelNo }}</div>
-
-      <input
-        type="number"
-        placeholder="MIN RANGE"
-        [(ngModel)]="ch.rangeLow"
-      />
-
-      <input
-        type="number"
-        placeholder="MAX RANGE"
-        [(ngModel)]="ch.rangeHigh"
-      />
-
-      <select [(ngModel)]="ch.unit">
-        <option value="">Unit</option>
-        <option *ngFor="let u of ALLOWED_UNITS">{{ u }}</option>
-      </select>
+    <div class="modal-header">
+      <div class="modal-title">ADD DEVICE MODEL</div>
+      <button class="close-btn" (click)="cancel()" aria-label="Close">&times;</button>
     </div>
 
-    <div class="actions">
-      <button (click)="submit()">SAVE</button>
-      <button class="cancel" (click)="cancel()">CANCEL</button>
+    <div class="modal-body">
+      <!-- UI-only (future use) -->
+      <div class="form-group">
+        <label>Device MAC ID</label>
+        <input 
+          placeholder="Not assigned yet" 
+          [(ngModel)]="device.macId" 
+          disabled 
+        />
+      </div>
+
+      <!-- Backend-aligned fields -->
+      <div class="form-group">
+        <label>Model Code <span class="required">*</span></label>
+        <input 
+          placeholder="e.g., DM-2024" 
+          [(ngModel)]="device.modelCode" 
+        />
+      </div>
+
+      <div class="form-group">
+        <label>Model Name <span class="required">*</span></label>
+        <input 
+          placeholder="e.g., Temperature Sensor Pro" 
+          [(ngModel)]="device.modelName" 
+        />
+      </div>
+
+      <div class="form-group">
+        <label>Number of Channels <span class="required">*</span></label>
+        <select 
+          [(ngModel)]="device.numberOfChannels" 
+          (ngModelChange)="updateChannels()"
+        >
+          <option *ngFor="let num of CHANNEL_OPTIONS" [value]="num">
+            {{ num }} Channel{{ num > 1 ? 's' : '' }}
+          </option>
+        </select>
+      </div>
+
+      <!-- Channel Configuration -->
+      <div class="channels-section">
+        <div class="section-title">Channel Configuration</div>
+        
+        <div class="channel-card" *ngFor="let ch of device.channels">
+          <div class="channel-header">
+            <span class="channel-badge">CH {{ ch.channelNo }}</span>
+          </div>
+
+          <div class="channel-inputs">
+            <div class="input-row">
+              <div class="input-group">
+                <label>Min Range <span class="required">*</span></label>
+                <input
+                  type="number"
+                  placeholder="0"
+                  [(ngModel)]="ch.rangeLow"
+                />
+              </div>
+
+              <div class="input-group">
+                <label>Max Range <span class="required">*</span></label>
+                <input
+                  type="number"
+                  placeholder="100"
+                  [(ngModel)]="ch.rangeHigh"
+                />
+              </div>
+            </div>
+
+            <div class="input-group">
+              <label>Unit <span class="required">*</span></label>
+              <select [(ngModel)]="ch.unit">
+                <option value="">Select Unit</option>
+                <option *ngFor="let u of ALLOWED_UNITS" [value]="u">{{ u }}</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal-footer">
+      <button class="btn btn-cancel" (click)="cancel()">CANCEL</button>
+      <button class="btn btn-save" (click)="submit()">SAVE DEVICE</button>
     </div>
 
   </div>
