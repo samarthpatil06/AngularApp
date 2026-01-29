@@ -90,6 +90,38 @@ app.get('/api/device-models', async (req, res) => {
 });
 
 
+// More secure version - excludes passwords
+app.get('/api/users', async (req, res) => {
+  try {
+    const users = await User.find({}, { password: 0 }); // Exclude password field
+    res.status(200).json(users);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({
+      message: 'Failed to fetch users'
+    });
+  }
+});
+
+// 🔹 ADD DEVICE MODEL
+app.post('/api/users', async (req, res) => {
+  try {
+    const user = new User(req.body);
+    await user.save();
+
+    res.status(201).json({
+      message: 'User added successfully',
+      data: user
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(400).json({
+      message: 'Failed to add user',
+      error: error.message
+    });
+  }
+});
+
 app.get('/api/db-test', async (req, res) => {
   try {
     const users = await User.find();
@@ -142,18 +174,6 @@ app.post('/api/register', async (req, res) => {
   }
 });
 
-// More secure version - excludes passwords
-app.get('/api/users', async (req, res) => {
-  try {
-    const users = await User.find({}, { password: 0 }); // Exclude password field
-    res.status(200).json(users);
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({
-      message: 'Failed to fetch users'
-    });
-  }
-});
 
 app.listen(3000, () => {
   console.log('Backend running on http://localhost:3000');
