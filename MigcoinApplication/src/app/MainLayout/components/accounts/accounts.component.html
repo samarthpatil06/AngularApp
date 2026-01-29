@@ -191,7 +191,7 @@
 
     <div class="table-row" *ngFor="let u of users">
 
-      <span>{{ u.firstName }} {{ u.lastName }}</span>
+      <span>{{ u.fullName }}</span>
 
       <span>{{ u.email }}</span>
 
@@ -201,7 +201,7 @@
 
       <span>
 
-        <span class="status" [class.active]="u.active"></span>
+        <span class="status" [class.active]="u.isActive"></span>
 
       </span>
 

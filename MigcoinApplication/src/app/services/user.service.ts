@@ -3,22 +3,19 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 @Injectable({
-    providedIn: 'root'
+  providedIn: 'root'
 })
 export class UserService {
 
-    // Make sure this matches your backend URL exactly
-    private apiUrl = 'http://localhost:3000/api/users';
+  private apiUrl = 'http://localhost:3000/api/users'; // Correct URL
 
-    constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) { }
 
-    // 1. Existing method
-    addUser(payload: any): Observable<any> {
-        return this.http.post(this.apiUrl, payload);
-    }
+  getUsers(): Observable<any> {
+    return this.http.get<any>(this.apiUrl);
+  }
 
-    // 2. NEW METHOD (Add this!)
-    getUsers(): Observable<any> {
-        return this.http.get<any[]>('http://localhost:3000/api/users');
-    }
+  addUser(user: any): Observable<any> {
+    return this.http.post<any>(this.apiUrl, user);
+  }
 }

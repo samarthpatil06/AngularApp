@@ -14,8 +14,8 @@
     <input type="password" placeholder="CONFIRM PASSWORD" [(ngModel)]="confirmPassword">
 
     <div class="actions">
-      <button (click)="submit()">SAVE</button>
-      <button class="cancel" (click)="close.emit()">CANCEL</button>
+      <button (click)="onSave()" class="save-btn">SAVE</button>
+      <button (click)="onCancel()" class="cancel-btn">CANCEL</button>
     </div>
 
   </div>

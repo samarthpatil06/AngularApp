@@ -1,15 +1,15 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms'; // Ensure FormsModule is here for inputs
+import { FormsModule } from '@angular/forms';
 
-// 1. DEFINE THE INTERFACE HERE LOCALLY
 export interface User {
   firstName: string;
   lastName: string;
   email: string;
   phone: string;
   role: 'Admin' | 'User';
-  active: boolean;
+  password: string;
+  isActive: boolean;  // Changed from 'active' to 'isActive'
 }
 
 @Component({
@@ -22,47 +22,63 @@ export interface User {
 export class AddUserComponent {
   password: string = '';
   confirmPassword: string = '';
-  close = new EventEmitter<void>();
 
-  // 2. Use the local User interface here
   @Output() save = new EventEmitter<User>();
+  @Output() close = new EventEmitter<void>();
 
-  // 3. Initialize the form data
   user: User = {
     firstName: '',
     lastName: '',
     email: '',
     phone: '',
     role: 'User',
-    active: true
+    password: '',
+    isActive: true  // Changed from 'active' to 'isActive'
   };
 
-  onSubmit() {
-    // Emit the data to the parent component
-    this.save.emit(this.user);
+  onSave(): void {
+    console.log('Before validation:', this.user); // Debug
 
-    // Reset the form
+    if (!this.password || !this.confirmPassword) {
+      alert('Please enter password');
+      return;
+    }
+
+    if (this.password !== this.confirmPassword) {
+      alert('Passwords do not match');
+      return;
+    }
+
+    if (!this.user.firstName || !this.user.email) {
+      alert('Please fill in all required fields');
+      return;
+    }
+
+    // Add password to user object
+    this.user.password = this.password;
+
+    console.log('Sending to backend:', this.user); // Debug
+
+    this.save.emit(this.user);
+    this.resetForm();
+  }
+
+  onCancel(): void {
+    this.close.emit();
+    this.resetForm();
+  }
+
+  private resetForm(): void {
     this.user = {
       firstName: '',
       lastName: '',
       email: '',
       phone: '',
       role: 'User',
-      active: true
+      password: '',
+      isActive: true  // Changed from 'active' to 'isActive'
     };
-  }
-
-  onClose() {
-    this.close.emit();
-  }
-
-  submit(): void {
-    // Add your submit logic here
-    if (this.password !== this.confirmPassword) {
-      console.error('Passwords do not match');
-      return;
-    }
-    // Handle user creation
-    console.log('User created:', this.user);
+    this.password = '';
+    this.confirmPassword = '';
   }
 }

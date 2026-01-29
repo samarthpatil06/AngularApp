@@ -169,10 +169,9 @@
 
 
 
-import { Component, OnInit } from '@angular/core'; // 1. Import OnInit
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AddUserComponent } from './add-user/add-user.component';
-// Check this path matches your folder structure
 import { UserService } from '../../../services/user.service';
 
 @Component({
@@ -182,7 +181,6 @@ import { UserService } from '../../../services/user.service';
   templateUrl: './accounts.component.html',
   styleUrl: './accounts.component.scss'
 })
-
 export class AccountsComponent implements OnInit {
 
   users: any[] = [];
@@ -190,7 +188,6 @@ export class AccountsComponent implements OnInit {
 
   constructor(private UserService: UserService) { }
 
-  // 3. Add this method (this loads data when page opens)
   ngOnInit(): void {
     this.fetchUsers();
   }
@@ -199,7 +196,10 @@ export class AccountsComponent implements OnInit {
     this.UserService.getUsers().subscribe({
       next: (data) => {
         console.log('Fetched Users:', data);
-        this.users = data;
+        this.users = data.map((user: any) => ({
+          ...user,
+          fullName: `${user.firstName} ${user.lastName || ''}`.trim()
+        }));
       },
       error: (err) => {
         console.error('Error fetching users:', err);
@@ -216,17 +216,19 @@ export class AccountsComponent implements OnInit {
   }
 
   addUser(user: any): void {
+    console.log('📤 About to send user data:', user); // Log BEFORE sending
+
     this.UserService.addUser(user).subscribe({
       next: (res) => {
-        console.log('User saved:', res);
+        console.log('✅ User saved:', res);
         this.fetchUsers();
         this.closeAddUser();
       },
       error: (err) => {
-        console.error('Failed to save device model', err);
-        alert('Failed to add user');
+        console.error('❌ Failed to add user', err);
+        alert(`Failed to add user: ${err.error?.message || err.message}`);
       }
-    })
+    });
   }
 }
 

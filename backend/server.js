@@ -1,7 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const mongoose = require('mongoose');
-const User = require('./models/User');
+const User = require('./models/User'); // Corrected import
 const DeviceModel = require('./models/DeviceModel');
 
 
@@ -94,27 +94,64 @@ app.get('/api/device-models', async (req, res) => {
 app.get('/api/users', async (req, res) => {
   try {
     const users = await User.find({}, { password: 0 }); // Exclude password field
+    console.log('Fetched users:', users); // Debug log
     res.status(200).json(users);
   } catch (error) {
-    console.error(error);
+    console.error('Error fetching users:', error);
     res.status(500).json({
       message: 'Failed to fetch users'
     });
   }
 });
 
-// 🔹 ADD DEVICE MODEL
+// 🔹 ADD USER
 app.post('/api/users', async (req, res) => {
   try {
-    const user = new User(req.body);
+    console.log('🔵 Raw request body:', JSON.stringify(req.body, null, 2)); // Full debug
+
+    const { firstName, lastName, email, phone, role, password } = req.body;
+
+    console.log('📋 Extracted fields:');
+    console.log('  firstName:', firstName);
+    console.log('  lastName:', lastName);
+    console.log('  email:', email);
+    console.log('  phone:', phone);
+    console.log('  role:', role);
+    console.log('  password:', password);
+
+    if (!firstName || !email || !password) {
+      return res.status(400).json({
+        message: `Missing required fields. Received: { firstName: ${firstName}, email: ${email}, password: ${password} }`
+      });
+    }
+
+    const existingUser = await User.findOne({ email });
+    if (existingUser) {
+      return res.status(400).json({
+        message: 'User with this email already exists'
+      });
+    }
+
+    const user = new User({
+      firstName: firstName,
+      lastName: lastName || '',
+      email: email,
+      phone: phone || '',
+      password: password,
+      role: role || 'User',
+      isActive: true
+    });
+
     await user.save();
+
+    console.log('✅ User saved to database:', user);
 
     res.status(201).json({
       message: 'User added successfully',
       data: user
     });
   } catch (error) {
-    console.error(error);
+    console.error('❌ Error:', error);
     res.status(400).json({
       message: 'Failed to add user',
       error: error.message
