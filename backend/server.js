@@ -8,6 +8,7 @@ const bcrypt = require('bcrypt');
 
 // Models
 const User = require('./models/User');
+const SuperUser = require('./models/Super_user');
 const DeviceModel = require('./models/DeviceModel');
 
 // ========================================
