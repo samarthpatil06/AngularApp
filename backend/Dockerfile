@@ -1,8 +1,8 @@
-# Step 1: Use official Node.js image
-FROM node:18
+# 1. Use a lightweight Node version
+FROM node:18-alpine
 
 # Step 2: Set working directory inside container
-WORKDIR /app
+WORKDIR /usr/src/app
 
 # Step 3: Copy package files
 COPY package*.json ./

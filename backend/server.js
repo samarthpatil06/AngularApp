@@ -1,6 +1,7 @@
 // ========================================
-// IMPORTS & DEPENDENCIES
+// 1. CONFIGURATION & ENVIRONMENT
 // ========================================
+require('dotenv').config(); // MUST be at the very top
 const express = require('express');
 const cors = require('cors');
 const mongoose = require('mongoose');
@@ -8,30 +9,41 @@ const bcrypt = require('bcrypt');
 
 // Models
 const User = require('./models/User');
-// const SuperUser = require('./models/Super_user');
 const DeviceModel = require('./models/DeviceModel');
 
-// ========================================
-// APP CONFIGURATION
-// ========================================
 const app = express();
+
+// Set dynamic values from process.env
+const PORT = process.env.PORT || 3000;
+const DB_URI = process.env.MONGO_URI;
+
+// ========================================
+// 2. MIDDLEWARE
+// ========================================
 app.use(cors());
 app.use(express.json());
 
 // ========================================
-// DATABASE CONNECTION
+// 3. DATABASE CONNECTION (Senior Level)
 // ========================================
-// mongoose.connect('mongodb://localhost:27017/cloud_app_db')
-// mongoose.connect("mongodb://host.docker.internal:27017/cloud_app_db") // For Local Docker Testing.
-mongoose.connect('mongodb://localhost:27017/cloud_app_db')
-  // mongoose.connect(process.env.MONGO_URI || "mongodb://localhost:27017/cloud_app_db")  //
+
+// Critical Check: If DB_URI is missing, the app shouldn't even try to start.
+if (!DB_URI) {
+  console.error('❌ FATAL ERROR: MONGO_URI is not defined in the environment.');
+  console.error('Please check your .env file or Docker environment variables.');
+  process.exit(1);
+}
+
+mongoose.connect(DB_URI)
   .then(() => {
-    console.log('✅ MongoDB connected successfully');
+    console.log('✅ Connected to MongoDB at:', DB_URI.split('@').pop()); // Logs location without showing password
   })
   .catch((err) => {
-    console.error('❌ MongoDB connection failed:', err.message);
+    console.error('❌ MongoDB Connection Error:', err.message);
     process.exit(1);
   });
+
+
 
 // ========================================
 // AUTHENTICATION ROUTES
@@ -337,6 +349,6 @@ app.get('/api/test', (req, res) => {
 // ========================================
 // SERVER START
 // ========================================
-app.listen(3000, () => {
-  console.log('🚀 Backend is running on port 3000');
+app.listen(PORT, () => {
+  console.log(`🚀 Backend is running on port ${PORT}`);
 });
