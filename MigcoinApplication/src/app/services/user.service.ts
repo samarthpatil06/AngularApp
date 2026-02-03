@@ -6,8 +6,8 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class UserService {
-  private apiUrl = '/api';  //For Docker
-  // private apiUrl = 'http://localhost:3000/api/users'; // Correct URL for Local
+  // private apiUrl = '/api';  //For Docker
+  private apiUrl = 'http://localhost:3000/api/users'; // Correct URL for Local
 
   constructor(private http: HttpClient) { }
 

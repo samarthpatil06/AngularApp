@@ -8,8 +8,8 @@ import { Observable } from 'rxjs';
 export class DeviceModelService {
 
   // Make sure this matches your backend URL exactly
-  private apiUrl = '/api/device-models';  //For Docker
-  // private apiUrl = 'http://localhost:3000/api/device-models';
+  // private apiUrl = '/api/device-models';  //For Docker
+  private apiUrl = 'http://localhost:3000/api/device-models';
 
   constructor(private http: HttpClient) { }
 

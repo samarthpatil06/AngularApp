@@ -22,7 +22,9 @@ app.use(express.json());
 // DATABASE CONNECTION
 // ========================================
 // mongoose.connect('mongodb://localhost:27017/cloud_app_db')
-mongoose.connect(process.env.MONGO_URI || "mongodb://localhost:27017/cloud_app_db")
+// mongoose.connect("mongodb://host.docker.internal:27017/cloud_app_db") // For Local Docker Testing.
+mongoose.connect('mongodb://localhost:27017/cloud_app_db')
+  // mongoose.connect(process.env.MONGO_URI || "mongodb://localhost:27017/cloud_app_db")  //
   .then(() => {
     console.log('✅ MongoDB connected successfully');
   })
@@ -56,7 +58,7 @@ app.post('/api/login', async (req, res) => {
     if (!isMatch) {
       return res.status(401).json({ message: 'Invalid credentials' });
     }
-    
+
 
     return res.json({
       email: user.email,
