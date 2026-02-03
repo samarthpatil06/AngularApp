@@ -13,23 +13,23 @@ const channelSchema = new mongoose.Schema({
     type: Number,
     required: true
   },
- unit: {
-  type: String,
-  enum: [
-    '°C',
-    'V/mV',
-    'mA/A',
-    'mbar',
-    'Lux',
-    'UL',
-    'ppm',
-    'bar',
-    'pH',
-    'uSiemens/mSiemens',
-    'cm/m'
-  ],
-  required: true
-}
+  unit: {
+    type: String,
+    enum: [
+      '°C',
+      'V/mV',
+      'mA/A',
+      'mbar',
+      'Lux',
+      'UL',
+      'ppm',
+      'bar',
+      'pH',
+      'uSiemens/mSiemens',
+      'cm/m'
+    ],
+    required: true
+  }
 
 }, { _id: false });
 
@@ -64,4 +64,5 @@ const deviceModelSchema = new mongoose.Schema({
   }
 });
 
-module.exports = mongoose.model('DeviceModel', deviceModelSchema);
+// module.exports = mongoose.model('DeviceModel', deviceModelSchema);
+module.exports = mongoose.models.DeviceModel || mongoose.model('DeviceModel', deviceModelSchema);

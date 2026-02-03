@@ -4,8 +4,8 @@ import { Router } from '@angular/router';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
-  // private apiUrl = '/api';  //For Docker
-  private apiUrl = 'http://localhost:3000/api'; //For Local
+  private apiUrl = '/api';  //For Docker
+  // private apiUrl = 'http://localhost:3000/api'; //For Local
 
   constructor(
     private http: HttpClient,

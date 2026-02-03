@@ -1,0 +1,40 @@
+services:
+  mongodb:
+    image: mongo:latest
+    container_name: mongodb
+    networks:
+      - cloud-net
+    volumes:
+      - mg-data:/data/db
+
+  cloud-backend:
+    image: siddhu101010/cloud-backend:latest
+    container_name: cloud-backend
+    ports:
+      - "3000:3000"
+    networks:
+      - cloud-net
+    environment:
+      - MONGO_URI=mongodb://mongodb:27017/cloud_app_db
+    depends_on:
+      - mongodb
+
+  cloud-frontend:
+    image: siddhu101010/cloud-frontend:latest
+    container_name: cloud-frontend
+    ports:
+      - "80:80"
+    networks:
+      - cloud-net
+    environment:
+      # Use the variable from the .env file
+      - API_BASE_URL=${API_BASE_URL}
+    depends_on:
+      - cloud-backend
+
+networks:
+  cloud-net:
+    external: true
+
+volumes:
+  mg-data:

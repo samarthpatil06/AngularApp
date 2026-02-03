@@ -8,7 +8,7 @@ const bcrypt = require('bcrypt');
 
 // Models
 const User = require('./models/User');
-const SuperUser = require('./models/Super_user');
+// const SuperUser = require('./models/Super_user');
 const DeviceModel = require('./models/DeviceModel');
 
 // ========================================
@@ -21,7 +21,8 @@ app.use(express.json());
 // ========================================
 // DATABASE CONNECTION
 // ========================================
-mongoose.connect('mongodb://localhost:27017/cloud_app_db')
+// mongoose.connect('mongodb://localhost:27017/cloud_app_db')
+mongoose.connect(process.env.MONGO_URI || "mongodb://localhost:27017/cloud_app_db")
   .then(() => {
     console.log('✅ MongoDB connected successfully');
   })
@@ -50,9 +51,12 @@ app.post('/api/login', async (req, res) => {
     }
 
     // Plain text comparison (use bcrypt in production)
-    if (user.password !== password) {
+    const isMatch = await bcrypt.compare(password, user.password);
+
+    if (!isMatch) {
       return res.status(401).json({ message: 'Invalid credentials' });
     }
+    
 
     return res.json({
       email: user.email,
@@ -71,7 +75,7 @@ app.post('/api/login', async (req, res) => {
  * Body: { email, password, role }
  */
 app.post('/api/register', async (req, res) => {
-  const { email, password, role } = req.body;
+  const { firstName, email, password, role } = req.body;
 
   try {
     const existingUser = await User.findOne({ email });
@@ -82,6 +86,7 @@ app.post('/api/register', async (req, res) => {
     const hashedPassword = await bcrypt.hash(password, 10);
 
     const user = new User({
+      firstName,
       email,
       password: hashedPassword,
       role,
@@ -331,5 +336,5 @@ app.get('/api/test', (req, res) => {
 // SERVER START
 // ========================================
 app.listen(3000, () => {
-  console.log('🚀 Backend running on http://localhost:3000');
+  console.log('🚀 Backend is running on port 3000');
 });
