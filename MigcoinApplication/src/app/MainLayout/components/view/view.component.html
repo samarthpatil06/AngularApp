@@ -1,3 +1,25 @@
-<div class="content">
-    
+<div class="dashboard-wrapper">
+  <h2 class="dashboard-title">System Overview</h2>
+
+  <div class="dashboard-grid">
+    <div class="card">
+      <p class="card-label">Total Users</p>
+      <p class="card-value">{{ data?.totalUsers }}</p>
+    </div>
+
+    <div class="card active">
+      <p class="card-label">Active Users</p>
+      <p class="card-value">{{ data?.activeUsers }}</p>
+    </div>
+
+    <div class="card inactive">
+      <p class="card-label">Inactive Users</p>
+      <p class="card-value">{{ data?.inactiveUsers }}</p>
+    </div>
+
+    <div class="card">
+      <p class="card-label">Device Models</p>
+      <p class="card-value">{{ data?.totalDeviceModels }}</p>
+    </div>
+  </div>
 </div>

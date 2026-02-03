@@ -1,10 +1,7 @@
-
-
 import { Routes } from '@angular/router';
 
 export const routes: Routes = [
 
-  // Login — HEADER ONLY
   {
     path: '',
     loadComponent: () =>
@@ -12,7 +9,6 @@ export const routes: Routes = [
         .then(m => m.LoginComponent)
   },
 
-  // Main layout — HEADER + NAVBAR
   {
     path: '',
     loadComponent: () =>
@@ -38,7 +34,7 @@ export const routes: Routes = [
         data: { title: 'Manage Devices' },
         loadComponent: () =>
           import('./MainLayout/components/devices/devices.component')
-            .then(m => m.DevicesComponent)
+            .then(m => m.DeviceModelsComponent)
       },
       {
         path: 'accounts',

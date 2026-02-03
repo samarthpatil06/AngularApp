@@ -14,7 +14,6 @@ export class AddDeviceComponent {
   @Output() close = new EventEmitter<void>();
   @Output() save = new EventEmitter<any>();
 
-  // 🔒 Backend-aligned unit contract (DO NOT CHANGE casually)
   readonly ALLOWED_UNITS: string[] = [
     '°C',
     'V/mV',
@@ -29,7 +28,6 @@ export class AddDeviceComponent {
     'cm/m'
   ];
 
-  // Backend-aligned DeviceModel structure
   device = {
     modelCode: '',
     modelName: '',
@@ -41,7 +39,6 @@ export class AddDeviceComponent {
       unit: string;
     }[],
 
-    // UI-only (future use)
     macId: '',
     locationId: ''
   };
@@ -60,7 +57,6 @@ export class AddDeviceComponent {
   }
 
   submit(): void {
-    // 🛡 sanity guard (peace of mind)
     for (const ch of this.device.channels) {
       if (!this.ALLOWED_UNITS.includes(ch.unit)) {
         alert(`Invalid unit selected: ${ch.unit}`);

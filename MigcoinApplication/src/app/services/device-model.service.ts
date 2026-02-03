@@ -14,4 +14,7 @@ export class DeviceModelService {
   addDeviceModel(payload: any): Observable<any> {
     return this.http.post(this.apiUrl, payload);
   }
+  getDeviceModels() {
+    return this.http.get<any[]>(this.apiUrl);
+  }
 }

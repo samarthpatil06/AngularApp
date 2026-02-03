@@ -10,8 +10,17 @@
 
     <div class="sub-title">SET LOGIN CREDENTIAL</div>
 
-    <input type="password" placeholder="NEW PASSWORD" [(ngModel)]="password">
-    <input type="password" placeholder="CONFIRM PASSWORD" [(ngModel)]="confirmPassword">
+    <input
+      type="password"
+      placeholder="NEW PASSWORD"
+      [(ngModel)]="user.password"
+    >
+
+    <input
+      type="password"
+      placeholder="CONFIRM PASSWORD"
+      [(ngModel)]="confirmPassword"
+    >
 
     <div class="actions">
       <button (click)="submit()">SAVE</button>

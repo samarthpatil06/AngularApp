@@ -3,11 +3,17 @@ const cors = require('cors');
 const mongoose = require('mongoose');
 const User = require('./models/User'); 
 const DeviceModel = require('./models/DeviceModel');
+const subscriptionRoutes = require("./routes/subscriptionRoutes");
+
 
 
 const app = express();
 app.use(cors());
 app.use(express.json());
+app.use("/api", subscriptionRoutes);
+app.use("/api/dashboard", require("./routes/dashboard.route"));
+
+
 
 // 🔹 MongoDB connection
 mongoose.connect('mongodb://localhost:27017/cloud_app_db')
@@ -25,21 +31,22 @@ app.post('/api/login', async (req, res) => {
       return res.status(401).json({ message: 'Invalid credentials' });
     }
 
-    // ⚠️ Plain text comparison for now
-    if (user.password !== password) {
+    const isMatch = await bcrypt.compare(password, user.password);
+
+    if (!isMatch) {
       return res.status(401).json({ message: 'Invalid credentials' });
     }
 
-    return res.json({
+    res.json({
       email: user.email,
       role: user.role
     });
 
   } catch (error) {
-    console.error(error);
-    return res.status(500).json({ message: 'Server error' });
+    res.status(500).json({ message: 'Server error' });
   }
 });
+
 
 // 🔹 ADD DEVICE MODEL
 app.post('/api/device-models', async (req, res) => {
@@ -72,6 +79,57 @@ app.get('/api/device-models', async (req, res) => {
     });
   }
 });
+
+// 🔹 GET USERS
+app.get('/api/users', async (req, res) => {
+  try {
+    console.log('RrrrrrrrrrrrAW BODY:', req.body);
+    const users = await User.find({ isActive: true }).select('-password');
+    res.status(200).json(users);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Failed to fetch users' });
+  }
+});
+
+// 🔹 CREATE USER
+const bcrypt = require('bcrypt');
+
+app.post('/api/users', async (req, res) => {
+  try {
+    console.log('aaaaaaaaaaaaaaaaaaaaaaaa BODY:', req.body);
+    const { firstName, lastName, email, phone, role, password } = req.body;
+
+    if (!password) {
+      return res.status(400).json({ message: 'Password is required' });
+    }
+
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    const user = new User({
+      firstName,
+      lastName,
+      email,
+      phone,
+      role,
+      password: hashedPassword,
+      isActive: true
+    });
+
+    await user.save();
+    res.status(201).json({
+      message: 'User created successfully'
+    });
+
+  } catch (error) {
+    console.error(error.message);
+    res.status(400).json({
+      message: 'Failed to create user',
+      error: error.message
+    });
+  }
+});
+
 
 
 

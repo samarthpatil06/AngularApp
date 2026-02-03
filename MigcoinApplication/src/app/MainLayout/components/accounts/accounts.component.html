@@ -1,27 +1,5 @@
 <div class="content">
 
-  <!-- ACCOUNT INFORMATION -->
-  <!-- <div class="section">
-    <div class="section-header">ACCOUNT INFORMATION</div>
-
-    <div class="info-grid">
-      <div><strong>Admin Name</strong></div><div>amul</div>
-      <div><strong>Created</strong></div><div>Sun, 9 Jun 25</div>
-      <div><strong>Company</strong></div><div>ABC LTD</div>
-      <div><strong>Address</strong></div>
-      <div>
-        ABC Lane<br>
-        ABC Chowk<br>
-        PUNE INDIA
-      </div>
-      <div><strong>Email</strong></div><div>{{adminEmail}}</div>
-      <div><strong>Contact</strong></div><div>9898989898</div>
-    </div>
-
-    <button class="smtp-btn">SET SMTP</button>
-  </div> -->
-
-  <!-- USER INFORMATION -->
   <div class="section">
     <div class="section-header user-header">
       USER INFORMATION
@@ -43,7 +21,7 @@
       <span>{{ u.phone }}</span>
       <span>{{ u.role }}</span>
       <span>
-        <span class="status" [class.active]="u.active"></span>
+        <span class="status" [class.active]="u.isActive"></span>
       </span>
       <button class="edit-btn">EDIT</button>
     </div>
@@ -53,6 +31,6 @@
 
 <app-add-user
   *ngIf="showAddUser"
-  (save)="addUser($event)"
+  (save)="addUser()"
   (close)="closeAddUser()">
 </app-add-user>

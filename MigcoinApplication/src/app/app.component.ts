@@ -1,15 +1,17 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { LoginComponent } from './login/login.component';
-import { HeaderComponent } from './MainLayout/header/header.component';
+import { CommonModule } from '@angular/common';
+
 
 @Component({
   selector: 'app-root',
-  standalone: true,
-  imports: [RouterOutlet,LoginComponent,HeaderComponent],
   templateUrl: './app.component.html',
-  styleUrl: './app.component.scss'
+  styleUrl: './app.component.scss',
+  imports:[RouterOutlet,CommonModule],
+  standalone:true
 })
-export class AppComponent {
-  title = 'MigcoinApplication';
+export class AppComponent implements OnInit {
+
+  ngOnInit() {}
+
 }

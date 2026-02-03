@@ -1,47 +1,31 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { AddDeviceComponent } from './add-device/add-device.component';
 import { DeviceModelService } from '../../../services/device-model.service';
 
-
 @Component({
-  selector: 'app-devices',
+  selector: 'app-device-models',
   standalone: true,
-  imports: [CommonModule, AddDeviceComponent],
+  imports: [CommonModule],
   templateUrl: './devices.component.html',
   styleUrl: './devices.component.scss'
 })
-export class DevicesComponent {
+export class DeviceModelsComponent implements OnInit {
 
-  // This now correctly represents Device MODELS
   deviceModels: any[] = [];
-
-  showAddModal = false;
 
   constructor(private deviceModelService: DeviceModelService) {}
 
-  openAddDevice(): void {
-    this.showAddModal = true;
+  ngOnInit(): void {
+    this.fetchDeviceModels();
   }
 
-  closeAddDevice(): void {
-    this.showAddModal = false;
-  }
-
-  // Called when AddDeviceComponent emits SAVE
-  addDevice(deviceModel: any): void {
-    this.deviceModelService.addDeviceModel(deviceModel).subscribe({
-      next: (res) => {
-        console.log('Device model saved:', res);
-
-        // 🔹 Visual feedback in frontend
-        this.deviceModels.push(res.data);
-
-        this.closeAddDevice();
+  fetchDeviceModels() {
+    this.deviceModelService.getDeviceModels().subscribe({
+      next: (data) => {
+        this.deviceModels = data;
       },
       error: (err) => {
-        console.error('Failed to save device model', err);
-        alert('Failed to add device model');
+        console.error('Failed to fetch device models', err);
       }
     });
   }

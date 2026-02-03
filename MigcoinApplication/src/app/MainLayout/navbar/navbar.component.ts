@@ -6,27 +6,27 @@ import { filter } from 'rxjs/operators';
 @Component({
   selector: 'app-navbar',
   standalone: true,
-  imports: [CommonModule,RouterModule],
+  imports: [CommonModule, RouterModule],
   templateUrl: './navbar.component.html',
-  styleUrl: './navbar.component.scss'
+  styleUrl: './navbar.component.scss',
 })
-export class NavbarComponent implements OnInit{
+export class NavbarComponent implements OnInit {
   title = '';
   isMenuOpen = false;
 
   menuItems = [
     { label: 'Manage Account', route: '/accounts' },
-    { label: 'Manage Devices', route: '/devices' }
+    { label: 'Manage Devices', route: '/devices' },
   ];
 
   constructor(
     private router: Router,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
   ) {}
 
   ngOnInit(): void {
     this.router.events
-      .pipe(filter(event => event instanceof NavigationEnd))
+      .pipe(filter((event) => event instanceof NavigationEnd))
       .subscribe(() => {
         this.title = this.getRouteTitle();
       });
@@ -36,7 +36,7 @@ export class NavbarComponent implements OnInit{
     this.isMenuOpen = !this.isMenuOpen;
   }
 
-   private getRouteTitle(): string {
+  private getRouteTitle(): string {
     let route = this.activatedRoute.firstChild;
 
     while (route?.firstChild) {
@@ -46,4 +46,10 @@ export class NavbarComponent implements OnInit{
     return route?.snapshot.data['title'] || '';
   }
 
+  gotosystem() {
+    console.log('button cllicked');
+
+    this.router.navigate(['/view']);
+    this.isMenuOpen = !this.isMenuOpen;
+  }
 }

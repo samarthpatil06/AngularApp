@@ -1,14 +1,17 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AddUserComponent } from './add-user/add-user.component';
+import { UserService } from '../../../services/user.service';
+
+
 
 export interface User {
   firstName: string;
   lastName: string;
   email: string;
   phone: string;
-  role: 'Admin' | 'User';
-  active: boolean;
+  role: 'Admin' | 'User' | 'SuperAdmin';
+  isActive: boolean;
 }
 
 @Component({
@@ -18,38 +21,31 @@ export interface User {
   templateUrl: './accounts.component.html',
   styleUrl: './accounts.component.scss'
 })
-export class AccountsComponent {
+export class AccountsComponent implements OnInit {
+
   adminEmail = 'abc@gmail.com';
 
-
-  users: User[] = [
-    {
-      firstName: 'Amul',
-      lastName: '',
-      email: 'amul@gmail.com',
-      phone: '9898989898',
-      role: 'Admin',
-      active: true
-    },
-    {
-      firstName: 'Nandini',
-      lastName: '',
-      email: 'nandini@gmail.com',
-      phone: '9898989898',
-      role: 'Admin',
-      active: true
-    },
-    {
-      firstName: 'Warana',
-      lastName: '',
-      email: 'warana@gmail.com',
-      phone: '9898989898',
-      role: 'Admin',
-      active: true
-    }
-  ];
+  users: User[] = [];
 
   showAddUser = false;
+
+  constructor(private userService: UserService) {}
+
+  ngOnInit(): void {
+    this.fetchUsers();
+  }
+
+  fetchUsers(): void {
+    this.userService.getUsers().subscribe({
+  next: (data: User[]) => {
+    this.users = data;
+  },
+  error: (err: any) => {
+    console.error(err);
+  }
+});
+
+  }
 
   openAddUser(): void {
     this.showAddUser = true;
@@ -59,8 +55,8 @@ export class AccountsComponent {
     this.showAddUser = false;
   }
 
-  addUser(user: User): void {
-    this.users.push(user);
+  addUser(): void {
+    this.fetchUsers();
     this.closeAddUser();
   }
 }
