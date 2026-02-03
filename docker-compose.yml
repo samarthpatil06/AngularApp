@@ -1,0 +1,40 @@
+services:
+  # --- 1. THE DATABASE ---
+  mongodb:
+    image: mongo:latest
+    container_name: mongodb_container
+    restart: always
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo-data:/data/db # This ensures your data isn't deleted when the container stops
+
+  # --- 2. THE BACKEND ---
+  backend:
+    build: ./backend # Path to your backend folder with the Dockerfile
+    container_name: node_backend
+    restart: always # Always restart the backend if it crashes
+    ports:
+      - "3000:3000"
+    environment:
+      # CRITICAL: We override the .env local host with the Docker service name
+      - MONGO_URI=mongodb://mongodb:27017/cloud_app_db
+      - PORT=3000
+    depends_on:
+      - mongodb # Don't start backend until mongodb is ready
+
+  # --- 3. THE FRONTEND ---
+  frontend:
+    build:
+      context: ./MigcoinApplication # Path to your frontend folder
+      dockerfile: Dockerfile
+    container_name: angular_frontend
+    restart: always
+    ports:
+      - "80:80" # Map Nginx port 80 to your machine's port 80
+    depends_on:
+      - backend
+
+# Define persistent storage for the DB
+volumes:
+  mongo-data:
