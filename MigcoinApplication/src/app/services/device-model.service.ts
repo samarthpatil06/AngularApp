@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -9,7 +10,7 @@ export class DeviceModelService {
 
   // Make sure this matches your backend URL exactly
   // private apiUrl = '/api/device-models';  //For Docker
-  private apiUrl = 'http://localhost:3000/api/device-models';
+  private apiUrl = `${environment.apiUrl}/device-models`; // For Local
 
   constructor(private http: HttpClient) { }
 
