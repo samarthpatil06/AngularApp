@@ -28,3 +28,14 @@ jobs:
         run: |
           docker build -t siddhu101010/migcoin-frontend:latest ./MigcoinApplication
           docker push siddhu101010/migcoin-frontend:latest
+
+            - name: Deploy to EC2
+        uses: appleboy/ssh-action@v1.0.0
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_USER }}
+          key: ${{ secrets.EC2_SSH_KEY }}
+          script: |
+            cd AngularApp
+            docker compose pull
+            docker compose up -d
