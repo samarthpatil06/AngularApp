@@ -6,7 +6,7 @@ import { environment } from '../../environments/environment';
 @Injectable({ providedIn: 'root' })
 export class AuthService {
   // private apiUrl = '/api';  //For Docker
-  private apiUrl = `${environment.apiUrl}`; 
+  private apiUrl = `${environment.apiUrl}`;
 
   constructor(
     private http: HttpClient,
@@ -15,7 +15,7 @@ export class AuthService {
 
 
   login(credentials: { email: string; password: string }) {
-    return this.http.post<any>(`${this.apiUrl}/login`, credentials);
+    return this.http.post<any>(`${this.apiUrl}/superuser/login`, credentials);
   }
 
 

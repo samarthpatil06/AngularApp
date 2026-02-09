@@ -3,20 +3,10 @@ version: "3.8"
 services:
   mongodb:
     image: mongo:6
-    container_name: mongodb_container
-    restart: unless-stopped
-    ports:
-      - "27017:27017"
-    volumes:
-      - /var/lib/mongo:/data/db
 
   backend:
     image: migcoin-backend:latest
     build: ./backend
-    container_name: node_backend
-    restart: unless-stopped
-    ports:
-      - "3000:3000"
     environment:
       - MONGO_URI=mongodb://mongodb:27017/cloud_app_db
       - PORT=3000
@@ -28,9 +18,5 @@ services:
     build:
       context: ./MigcoinApplication
       dockerfile: Dockerfile
-    container_name: angular_frontend
-    restart: unless-stopped
-    ports:
-      - "80:80"
     depends_on:
       - backend

@@ -9,6 +9,7 @@ const bcrypt = require('bcrypt');
 
 // Models
 const User = require('./models/User');
+const SuperUser = require('./models/SuperUser');  // ← ADD THIS
 const DeviceModel = require('./models/DeviceModel');
 
 const app = express();
@@ -54,23 +55,25 @@ mongoose.connect(DB_URI)
  * POST /api/login
  * Body: { email, password }
  */
-app.post('/api/login', async (req, res) => {
+/**
+ * SUPERUSER LOGIN
+ * POST /api/superuser/login
+ */
+app.post('/api/superuser/login', async (req, res) => {
   const { email, password } = req.body;
 
   try {
-    const user = await User.findOne({ email, isActive: true });
+    const user = await SuperUser.findOne({ email, isActive: true });
 
     if (!user) {
       return res.status(401).json({ message: 'Invalid credentials' });
     }
 
-    // Plain text comparison (use bcrypt in production)
     const isMatch = await bcrypt.compare(password, user.password);
 
     if (!isMatch) {
       return res.status(401).json({ message: 'Invalid credentials' });
     }
-
 
     return res.json({
       email: user.email,
@@ -78,49 +81,41 @@ app.post('/api/login', async (req, res) => {
     });
 
   } catch (error) {
-    console.error('❌ Login error:', error);
+    console.error('❌ SuperUser login error:', error);
     return res.status(500).json({ message: 'Server error' });
   }
 });
 
 /**
- * REGISTER ROUTE
- * POST /api/register
- * Body: { email, password, role }
+ * SUPERUSER REGISTER
+ * POST /api/superuser/create
  */
-app.post('/api/register', async (req, res) => {
-  const { firstName, email, password, role } = req.body;
+app.post('/api/superuser/create', async (req, res) => {
+  const { email, password, role } = req.body;
 
   try {
-    const existingUser = await User.findOne({ email });
-    if (existingUser) {
-      return res.status(400).json({ message: "User already exists" });
-    }
-
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    const user = new User({
-      firstName,
+    const superUser = new SuperUser({
       email,
       password: hashedPassword,
-      role,
+      role: role || 'admin',
       isActive: true
     });
 
-    await user.save();
+    await superUser.save();
 
-    res.status(201).json({
-      message: "User registered successfully",
-      email: user.email,
-      role: user.role
+    return res.status(201).json({
+      message: 'SuperUser created successfully',
+      email: superUser.email,
+      role: superUser.role
     });
 
-  } catch (err) {
-    console.error('❌ Register error:', err);
-    res.status(500).json({ message: "Server error" });
+  } catch (error) {
+    console.error('❌ SuperUser creation error:', error);
+    return res.status(500).json({ message: 'Error creating SuperUser' });
   }
 });
-
 // ========================================
 // USER MANAGEMENT ROUTES
 // ========================================
