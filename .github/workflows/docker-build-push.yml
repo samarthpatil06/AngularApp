@@ -1,3 +1,4 @@
+# For more information on how to configure your workflow, see the documentation: https://docs.github.com/actions/learn-github-actions/workflow-syntax-for-github-actions
 name: Build & Push Docker Images
 
 on:
@@ -39,3 +40,4 @@ jobs:
             cd AngularApp
             docker compose pull
             docker compose up -d
+            
