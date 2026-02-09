@@ -2,9 +2,10 @@
 name: Build & Push Docker Images
 
 on:
-  push:
-    branches:
-      - localhost
+  workflow_dispatch:
+  # push:
+  #   branches:
+  #     - localhost
 
 jobs:
   build-and-push:
