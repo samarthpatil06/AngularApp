@@ -11,3 +11,6 @@ yarn-error.log*
 # Build output
 dist/
 .angular/
+
+github_ec2
+github_ec2.pub
