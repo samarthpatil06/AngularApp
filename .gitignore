@@ -12,5 +12,3 @@ yarn-error.log*
 dist/
 .angular/
 
-github_ec2
-github_ec2.pub
