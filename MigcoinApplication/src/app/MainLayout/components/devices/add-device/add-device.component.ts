@@ -45,8 +45,26 @@ export class AddDeviceComponent implements OnInit {
     locationId: ''
   };
 
+  // 🔥 NEW: User information for email
+  currentUser: any = null;
+
   ngOnInit(): void {
     this.updateChannels();
+    this.loadCurrentUser();
+  }
+
+  // 🔥 NEW: Load current logged-in user information
+  loadCurrentUser(): void {
+    // Get user from localStorage (adjust based on your auth implementation)
+    const userStr = localStorage.getItem('currentUser') || localStorage.getItem('user');
+    if (userStr) {
+      try {
+        this.currentUser = JSON.parse(userStr);
+        console.log('Current user loaded:', this.currentUser);
+      } catch (error) {
+        console.error('Error parsing user data:', error);
+      }
+    }
   }
 
   updateChannels(): void {
@@ -94,12 +112,20 @@ export class AddDeviceComponent implements OnInit {
       }
     }
 
+    // 🔥 NEW: Include user information in payload
     const payload = {
       modelCode: this.device.modelCode,
       modelName: this.device.modelName,
       numberOfChannels: this.device.numberOfChannels,
-      channels: this.device.channels
+      channels: this.device.channels,
+      // Add user information for email notification
+      userEmail: this.currentUser?.email || '',
+      userName: this.currentUser?.firstName
+        ? `${this.currentUser.firstName} ${this.currentUser.lastName || ''}`.trim()
+        : 'User'
     };
+
+    console.log('Submitting device with user info:', payload);
 
     this.save.emit(payload);
   }

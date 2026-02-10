@@ -15,23 +15,10 @@ const channelSchema = new mongoose.Schema({
   },
   unit: {
     type: String,
-    enum: [
-      '°C',
-      'V/mV',
-      'mA/A',
-      'mbar',
-      'Lux',
-      'UL',
-      'ppm',
-      'bar',
-      'pH',
-      'uSiemens/mSiemens',
-      'cm/m'
-    ],
-    required: true
+    required: true,
+    enum: ['°C', 'V/mV', 'mA/A', 'mbar', 'Lux', 'UL', 'ppm', 'bar', 'pH', 'uSiemens/mSiemens', 'cm/m']
   }
-
-}, { _id: false });
+});
 
 const deviceModelSchema = new mongoose.Schema({
   modelCode: {
@@ -49,20 +36,43 @@ const deviceModelSchema = new mongoose.Schema({
     min: 1,
     max: 8
   },
-  channels: {
-    type: [channelSchema],
-    validate: {
-      validator: function (v) {
-        return v.length === this.numberOfChannels;
-      },
-      message: 'Channels count must match numberOfChannels'
-    }
+  channels: [channelSchema],
+  macId: {
+    type: String,
+    default: ''
   },
-  createdAt: {
+  locationId: {
+    type: String,
+    default: ''
+  },
+  // 🔥 NEW: Device activation fields
+  isActive: {
+    type: Boolean,
+    default: false
+  },
+  activationToken: {
+    type: String,
+    default: null
+  },
+  activationExpires: {
     type: Date,
-    default: Date.now
+    default: null
+  },
+  isActivated: {
+    type: Boolean,
+    default: false
+  },
+  activatedAt: {
+    type: Date,
+    default: null
+  },
+  // Track which user added the device
+  addedByEmail: {
+    type: String,
+    default: null
   }
+}, {
+  timestamps: true
 });
 
-// module.exports = mongoose.model('DeviceModel', deviceModelSchema);
-module.exports = mongoose.models.DeviceModel || mongoose.model('DeviceModel', deviceModelSchema);
+module.exports = mongoose.model('DeviceModel', deviceModelSchema);

@@ -9,7 +9,7 @@ export interface User {
   phone: string;
   role: 'Admin' | 'User';
   password: string;
-  isActive: boolean;  // Changed from 'active' to 'isActive'
+  isActive: boolean;
 }
 
 @Component({
@@ -33,12 +33,13 @@ export class AddUserComponent {
     phone: '',
     role: 'User',
     password: '',
-    isActive: true  // Changed from 'active' to 'isActive'
+    isActive: false  // Will be activated via email
   };
 
   onSave(): void {
-    console.log('Before validation:', this.user); // Debug
+    console.log('Before validation:', this.user);
 
+    // Validate password
     if (!this.password || !this.confirmPassword) {
       alert('Please enter password');
       return;
@@ -49,18 +50,27 @@ export class AddUserComponent {
       return;
     }
 
+    // Validate required fields
     if (!this.user.firstName || !this.user.email) {
-      alert('Please fill in all required fields');
+      alert('Please fill in all required fields (First Name and Email)');
+      return;
+    }
+
+    // Validate email format
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(this.user.email)) {
+      alert('Please enter a valid email address');
       return;
     }
 
     // Add password to user object
     this.user.password = this.password;
+    this.user.isActive = false;  // User must activate via email
 
-    console.log('Sending to backend:', this.user); // Debug
+    console.log('Sending to backend:', this.user);
 
     this.save.emit(this.user);
-    this.resetForm();
+    // Don't reset form here - let parent component handle it after success
   }
 
   onCancel(): void {
@@ -68,7 +78,7 @@ export class AddUserComponent {
     this.resetForm();
   }
 
-  private resetForm(): void {
+  resetForm(): void {
     this.user = {
       firstName: '',
       lastName: '',
@@ -76,7 +86,7 @@ export class AddUserComponent {
       phone: '',
       role: 'User',
       password: '',
-      isActive: true  // Changed from 'active' to 'isActive'
+      isActive: false
     };
     this.password = '';
     this.confirmPassword = '';
