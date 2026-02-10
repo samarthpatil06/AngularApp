@@ -6,6 +6,8 @@ const express = require('express');
 const cors = require('cors');
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
+// const subscriptionRoutes = require("./routes/subscriptionRoutes"); // Subscription routes
+
 
 // Models
 const User = require('./models/User');
@@ -25,6 +27,7 @@ const DB_URI = process.env.MONGO_URI;
 // ========================================
 app.use(cors());
 app.use(express.json());
+// app.use("/api", subscriptionRoutes); // Subscription routes
 
 // ========================================
 // 3. DATABASE CONNECTION (Senior Level)
@@ -621,8 +624,8 @@ app.post('/api/devices/resend-activation', async (req, res) => {
 
     // Get user details
     const user = await User.findOne({ email: userEmail });
-    const userName = user 
-      ? `${user.firstName} ${user.lastName}`.trim() 
+    const userName = user
+      ? `${user.firstName} ${user.lastName}`.trim()
       : 'User';
 
     // Generate new token
