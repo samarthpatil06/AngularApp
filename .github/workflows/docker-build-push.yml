@@ -4,7 +4,7 @@ name: Build & Push Docker Images
 on:
   push:
     branches:
-      - localhost
+      - main
 
 jobs:
   build-and-push:
