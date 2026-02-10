@@ -12,33 +12,31 @@ const subscriptionSchema = new mongoose.Schema(
       },
     },
 
-    userId: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "User",
-      required: true,
-    },
-
     planType: {
       type: String,
       enum: ["free", "trial", "premium"],
-      default: "trial",
+      required: true,
     },
 
     status: {
       type: String,
-      enum: ["active", "expired", "revoked"],
-      default: "active",
+      enum: ["inactive", "active", "expired", "revoked"],
+      default: "inactive",
     },
 
     startDate: {
       type: Date,
-      required: true,
-      default: Date.now,
+      default: null,
     },
 
     endDate: {
       type: Date,
-      required: true,
+      default: null,
+    },
+
+    activatedAt: {
+      type: Date,
+      default: null,
     },
 
     revokedAt: {

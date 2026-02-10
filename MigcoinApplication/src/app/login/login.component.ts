@@ -31,12 +31,13 @@ export class LoginComponent {
       .subscribe({
         next: (res) => {
           this.authService.saveUser(res);
-
-          if (res.role === 'SUPERUSER') {
-            this.router.navigate(['/dashboard']);
+          
+          if (res.role === 'SuperAdmin') {
+            this.router.navigate(['/view']);
           } else {
             this.router.navigate(['/view']);
           }
+
         },
         error: () => {
           alert('Invalid credentials');

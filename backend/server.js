@@ -1,9 +1,12 @@
+require('dotenv').config();
+
 const express = require('express');
 const cors = require('cors');
 const mongoose = require('mongoose');
 const User = require('./models/User'); 
 const DeviceModel = require('./models/DeviceModel');
 const subscriptionRoutes = require("./routes/subscriptionRoutes");
+const testRoutes = require('./routes/test.routes');
 
 
 
@@ -12,6 +15,7 @@ app.use(cors());
 app.use(express.json());
 app.use("/api", subscriptionRoutes);
 app.use("/api/dashboard", require("./routes/dashboard.route"));
+app.use('/api', testRoutes);
 
 
 
@@ -20,32 +24,38 @@ mongoose.connect('mongodb://localhost:27017/cloud_app_db')
   .then(() => console.log('MongoDB connected'))
   .catch(err => console.error('MongoDB connection error:', err));
 
-// 🔹 LOGIN ROUTE (NOW USING DATABASE)
+const jwt = require('jsonwebtoken');
+
 app.post('/api/login', async (req, res) => {
   const { email, password } = req.body;
 
-  try {
-    const user = await User.findOne({ email, isActive: true });
-
-    if (!user) {
-      return res.status(401).json({ message: 'Invalid credentials' });
-    }
-
-    const isMatch = await bcrypt.compare(password, user.password);
-
-    if (!isMatch) {
-      return res.status(401).json({ message: 'Invalid credentials' });
-    }
-
-    res.json({
-      email: user.email,
-      role: user.role
-    });
-
-  } catch (error) {
-    res.status(500).json({ message: 'Server error' });
+  const user = await User.findOne({ email, isActive: true });
+  if (!user) {
+    return res.status(401).json({ message: 'Invalid credentials' });
   }
+
+  const isMatch = await bcrypt.compare(password, user.password);
+  if (!isMatch) {
+    return res.status(401).json({ message: 'Invalid credentials' });
+  }
+
+  const token = jwt.sign(
+    {
+      userId: user._id,
+      role: user.role
+    },
+    process.env.JWT_SECRET,
+    { expiresIn: '1d' }
+  );
+console.log('JWT_SECRET:', process.env.JWT_SECRET);
+
+  res.json({
+    token,
+    role: user.role,
+    firstLogin: !user.passwordChanged
+  });
 });
+
 
 
 // 🔹 ADD DEVICE MODEL
@@ -130,6 +140,8 @@ app.post('/api/users', async (req, res) => {
   }
 });
 
+const superAdminRoutes = require('./routes/superAdmin.routes');
+app.use('/api', superAdminRoutes);
 
 
 

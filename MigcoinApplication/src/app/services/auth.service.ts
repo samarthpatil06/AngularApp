@@ -15,16 +15,21 @@ export class AuthService {
     return this.http.post<any>(`${this.apiUrl}/login`, credentials);
   }
 
-  saveUser(user: any) {
-    localStorage.setItem('user', JSON.stringify(user));
-  }
+  saveUser(res: any) {
+  localStorage.setItem('token', res.token);
+  localStorage.setItem('user', JSON.stringify({
+    email: res.email,
+    role: res.role
+  }));
+}
+
 
   getUser() {
     return JSON.parse(localStorage.getItem('user') || '{}');
   }
 
   isSuperUser(): boolean {
-    return this.getUser().role === 'SUPERUSER';
+    return this.getUser().role === 'SuperAdmin';
   }
 
   logout() {

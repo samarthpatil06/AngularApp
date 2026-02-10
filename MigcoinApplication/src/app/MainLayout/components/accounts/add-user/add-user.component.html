@@ -1,31 +1,91 @@
-<div class="overlay">
+
+<div class="overlay" *ngIf="!showSuccessModal">
   <div class="modal">
 
     <div class="modal-title">ADD USER</div>
 
-    <input placeholder="FIRST NAME" [(ngModel)]="user.firstName">
-    <input placeholder="LAST NAME" [(ngModel)]="user.lastName">
-    <input placeholder="EMAIL" [(ngModel)]="user.email">
+    <input placeholder="FIRST NAME" [(ngModel)]="user.firstName" required>
+    <input placeholder="LAST NAME" [(ngModel)]="user.lastName" required>
+    <input placeholder="EMAIL" type="email" [(ngModel)]="user.email" required>
     <input placeholder="PHONE" [(ngModel)]="user.phone">
 
-    <div class="sub-title">SET LOGIN CREDENTIAL</div>
+    <div class="sub-title">ROLE</div>
 
-    <input
-      type="password"
-      placeholder="NEW PASSWORD"
-      [(ngModel)]="user.password"
-    >
+    <select [(ngModel)]="user.role" required>
+      <option value="User">User</option>
+      <option value="Admin">Admin</option>
+      <option value="SuperAdmin">Super Admin</option>
+    </select>
 
-    <input
-      type="password"
-      placeholder="CONFIRM PASSWORD"
-      [(ngModel)]="confirmPassword"
-    >
+    <div class="sub-title">SUBSCRIPTION PLAN</div>
+
+    <select [(ngModel)]="user.subscriptionPlan">
+      <option value="3m">3 Months</option>
+      <option value="5m">5 Months</option>
+      <option value="12m">12 Months</option>
+    </select>
+
+    <div class="error" *ngIf="error">{{ error }}</div>
 
     <div class="actions">
-      <button (click)="submit()">SAVE</button>
+      <button (click)="submit()" [disabled]="loading">
+        {{ loading ? 'CREATING...' : 'SAVE' }}
+      </button>
       <button class="cancel" (click)="close.emit()">CANCEL</button>
     </div>
 
+  </div>
+</div>
+
+<!-- Success Modal -->
+<div class="overlay" *ngIf="showSuccessModal">
+  <div class="modal success-modal">
+    <div class="modal-title" style="color: #28a745;">✓ USER CREATED SUCCESSFULLY</div>
+    
+    <div class="success-content">
+      <p style="margin-bottom: 20px; color: #666; font-size: 14px;">
+        The user account has been created successfully. Share the credentials below with the user:
+      </p>
+
+      <div class="credential-box">
+        <div class="credential-item">
+          <label>Username (Email)</label>
+          <div class="credential-value">
+            <span>{{ createdUserEmail }}</span>
+            <button 
+              class="copy-btn" 
+              (click)="copyToClipboard(createdUserEmail)"
+              title="Copy email"
+            >
+              📋
+            </button>
+          </div>
+        </div>
+
+        <div class="credential-item">
+          <label>Temporary Password</label>
+          <div class="credential-value">
+            <span style="font-family: monospace; font-weight: bold; letter-spacing: 1px;">
+              {{ createdUserPassword }}
+            </span>
+            <button 
+              class="copy-btn" 
+              (click)="copyToClipboard(createdUserPassword)"
+              title="Copy password"
+            >
+              📋
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <p style="margin-top: 20px; color: #ff6b6b; font-size: 12px; background: #ffe0e0; padding: 10px; border-radius: 4px;">
+        ⚠️ <strong>Important:</strong> The password will be sent to the user's email. User must change password on first login.
+      </p>
+    </div>
+
+    <div class="actions">
+      <button (click)="closeSuccessModal()" class="primary-btn">DONE</button>
+    </div>
   </div>
 </div>

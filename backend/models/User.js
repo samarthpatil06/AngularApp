@@ -34,6 +34,22 @@ const userSchema = new mongoose.Schema(
       default: 'User'
     },
 
+    subscriptionId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Subscription',
+      required: true
+    },
+
+    firstLogin: {
+      type: Boolean,
+      default: false
+    },
+
+    passwordChanged: {
+      type: Boolean,
+      default: false
+    },
+
     isActive: {
       type: Boolean,
       default: true
