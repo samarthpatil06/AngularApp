@@ -1,0 +1,32 @@
+<nav class="navbar">
+  <div class="menu-icon" (click)="toggleMenu()">
+    ☰
+  </div>
+
+  <div class="title">
+    {{ title }}
+  </div>
+</nav>
+
+<!-- Side Menu -->
+<div class="side-menu" [class.open]="isMenuOpen">
+  <ul>
+    <li *ngFor="let item of menuItems">
+      <a [routerLink]="item.route" (click)="toggleMenu()">
+        {{ item.label }}
+      </a>
+    </li>
+  </ul>
+
+<div class="menu-footer">
+    <button class="system-btn" (click)="gotosystem()">
+      System Overview
+    </button>
+  </div>
+</div>
+
+<!-- Overlay -->
+<div class="overlay"
+     *ngIf="isMenuOpen"
+     (click)="toggleMenu()">
+</div>

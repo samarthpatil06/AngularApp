@@ -1,0 +1,17 @@
+<table>
+  <thead>
+    <tr>
+      <th>Model Name</th>
+      <th>Model Code</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <tr *ngFor="let model of deviceModels">
+      <td>{{ model.modelName }}</td>
+      <td>{{ model.modelCode }}</td>
+      <td>{{ model.description || '-' }}</td>
+    </tr>
+  </tbody>
+</table>

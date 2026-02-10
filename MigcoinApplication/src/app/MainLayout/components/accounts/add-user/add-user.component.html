@@ -1,0 +1,56 @@
+<div class="overlay">
+  <div class="modal">
+
+    <div class="modal-title">ADD USER</div>
+
+    <input placeholder="FIRST NAME" [(ngModel)]="user.firstName">
+    <input placeholder="LAST NAME" [(ngModel)]="user.lastName">
+    <input placeholder="EMAIL" [(ngModel)]="user.email">
+    <input placeholder="PHONE" [(ngModel)]="user.phone">
+
+    <!-- Subscription Plan -->
+    <div class="sub-title">SUBSCRIPTION PLAN</div>
+
+    <select [(ngModel)]="user.plan">
+      <option value="">Select Plan</option>
+      <option value="basic">Basic (1 Month)</option>
+      <option value="pro">Pro (6 Months)</option>
+      <option value="premium">Premium (1 Year)</option>
+    </select>
+
+    <!-- License Key -->
+    <div class="sub-title">LICENSE KEY</div>
+
+    <input
+      type="text"
+      readonly
+      [(ngModel)]="user.licenseKey"
+      placeholder="Auto Generated"
+    >
+
+    <button class="gen-btn" (click)="generateKey()">
+      Generate Key
+    </button>
+
+    <!-- Password -->
+    <div class="sub-title">SET LOGIN CREDENTIAL</div>
+
+    <input
+      type="password"
+      placeholder="NEW PASSWORD"
+      [(ngModel)]="user.password"
+    >
+
+    <input
+      type="password"
+      placeholder="CONFIRM PASSWORD"
+      [(ngModel)]="confirmPassword"
+    >
+
+    <div class="actions">
+      <button (click)="submit()">SAVE</button>
+      <button class="cancel" (click)="close.emit()">CANCEL</button>
+    </div>
+
+  </div>
+</div>

@@ -1,0 +1,84 @@
+.content {
+  min-height: calc(100vh - 128px);
+  background: #f3f4f6;
+  padding: 0.75rem;
+}
+
+.section {
+  background: #e5e7eb;
+  margin-bottom: 0.75rem;
+  padding: 0.5rem;
+}
+
+.section-header {
+  background: #9ca3af;
+  padding: 0.4rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.user-header {
+  display: flex;
+  justify-content: space-between;
+}
+
+.info-grid {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  font-size: 0.7rem;
+  gap: 0.4rem;
+  margin-top: 0.5rem;
+}
+
+.smtp-btn {
+  margin-top: 0.5rem;
+  background: #475569;
+  color: #fff;
+  border: none;
+  padding: 0.3rem 0.75rem;
+  font-size: 0.7rem;
+}
+
+.add-btn {
+  background: #475569;
+  color: #fff;
+  border: none;
+  font-size: 0.7rem;
+  padding: 0.2rem 0.6rem;
+}
+
+.table-header,
+.table-row {
+  display: grid;
+  grid-template-columns: 2fr 2fr 1.5fr 1fr 0.5fr 1fr;
+  font-size: 0.7rem;
+  padding: 0.4rem;
+}
+
+.table-header {
+  background: #d1d5db;
+  font-weight: 600;
+}
+
+.table-row {
+  background: #fff;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.edit-btn {
+  background: none;
+  border: none;
+  color: #2563eb;
+  font-size: 0.7rem;
+}
+
+.status {
+  width: 10px;
+  height: 10px;
+  display: inline-block;
+  background: red;
+}
+
+.status.active {
+  background: green;
+}

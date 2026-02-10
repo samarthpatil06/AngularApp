@@ -1,0 +1,36 @@
+<div class="content">
+
+  <div class="section">
+    <div class="section-header user-header">
+      USER INFORMATION
+      <button class="add-btn" (click)="openAddUser()">ADD USER</button>
+    </div>
+
+    <div class="table-header">
+      <span>Name</span>
+      <span>Email</span>
+      <span>Contact</span>
+      <span>Level</span>
+      <span>Sts</span>
+      <span></span>
+    </div>
+
+    <div class="table-row" *ngFor="let u of users">
+      <span>{{ u.firstName }} {{ u.lastName }}</span>
+      <span>{{ u.email }}</span>
+      <span>{{ u.phone }}</span>
+      <span>{{ u.role }}</span>
+      <span>
+        <span class="status" [class.active]="u.isActive"></span>
+      </span>
+      <button class="edit-btn">EDIT</button>
+    </div>
+  </div>
+
+</div>
+
+<app-add-user
+  *ngIf="showAddUser"
+  (save)="addUser()"
+  (close)="closeAddUser()">
+</app-add-user>
