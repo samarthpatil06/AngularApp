@@ -7,6 +7,7 @@ const User = require('./models/User');
 const DeviceModel = require('./models/DeviceModel');
 const subscriptionRoutes = require("./routes/subscriptionRoutes");
 const testRoutes = require('./routes/test.routes');
+const authMiddleware = require('./middlewares/authMiddleware');
 
 
 
@@ -91,16 +92,15 @@ app.get('/api/device-models', async (req, res) => {
 });
 
 // 🔹 GET USERS
-app.get('/api/users', async (req, res) => {
+app.get('/api/users', authMiddleware, async (req, res) => {
   try {
-    console.log('RrrrrrrrrrrrAW BODY:', req.body);
     const users = await User.find({ isActive: true }).select('-password');
     res.status(200).json(users);
   } catch (error) {
-    console.error(error);
     res.status(500).json({ message: 'Failed to fetch users' });
   }
 });
+
 
 // 🔹 CREATE USER
 const bcrypt = require('bcrypt');
