@@ -5,8 +5,10 @@
   display: flex;
   align-items: center;
   padding: 0 1rem;
-  position: relative;
-  z-index: 1000;
+  /* Removed fixed positioning to allow flex layout control */
+  z-index: 999;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
+    0 2px 4px -1px rgba(0, 0, 0, 0.06);
 }
 
 .menu-icon {
@@ -22,6 +24,110 @@
 .title {
   font-size: 0.9rem;
   font-weight: 600;
+}
+
+.search-container {
+  margin-left: auto;
+  /* Pushes search to the right */
+  display: flex;
+  align-items: center;
+  background-color: rgba(255, 255, 255, 0.1);
+  padding: 4px 12px;
+  border-radius: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  transition: all 0.3s ease;
+  position: relative;
+  /* Essential for dropdown positioning */
+
+  &:focus-within {
+    background-color: rgba(255, 255, 255, 0.2);
+    border-color: rgba(255, 255, 255, 0.5);
+    box-shadow: 0 0 8px rgba(255, 255, 255, 0.1);
+  }
+}
+
+.search-results {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  width: 300px;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  margin-top: 8px;
+  overflow: hidden;
+  z-index: 1000;
+  max-height: 400px;
+  /* Prevent it from being too long */
+  overflow-y: auto;
+}
+
+.result-item {
+  padding: 10px 16px;
+  border-bottom: 1px solid #eee;
+  cursor: pointer;
+  transition: background-color 0.2s;
+
+  &:last-child {
+    border-bottom: none;
+  }
+
+  &:hover {
+    background-color: #f5f5f5;
+  }
+}
+
+.user-name {
+  font-weight: 600;
+  color: #333;
+  font-size: 0.9rem;
+  margin-bottom: 2px;
+}
+
+.user-meta {
+  font-size: 0.75rem;
+  color: #666;
+}
+
+.search-input {
+  background: transparent;
+  border: none;
+  color: #ffffff;
+  outline: none;
+  font-size: 0.85rem;
+  width: 140px;
+  transition: width 0.3s ease;
+
+  &::placeholder {
+    color: rgba(255, 255, 255, 0.6);
+  }
+
+  /* Expand on focus for better UX */
+  &:focus {
+    width: 180px;
+  }
+}
+
+.search-btn {
+  background: none;
+  border: none;
+  color: #ffffff;
+  cursor: pointer;
+  padding: 0;
+  margin-left: 8px;
+  display: flex;
+  align-items: center;
+  transition: transform 0.2s ease;
+
+  &:hover {
+    color: #b7d36b;
+    transform: scale(1.1);
+  }
+
+  svg {
+    width: 16px;
+    height: 16px;
+  }
 }
 
 /* Side Menu */
@@ -50,6 +156,20 @@
 .side-menu li {
   padding: 1rem;
   border-bottom: 1px solid #607d8b;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+
+  &.active {
+    background-color: rgba(255, 255, 255, 0.1);
+    border-left: 5px solid #b7d36b;
+    padding-left: calc(1rem - 5px);
+    /* Maintain padding */
+  }
+
+  &.active a {
+    color: #b7d36b;
+    font-weight: 700;
+  }
 }
 
 .side-menu a {

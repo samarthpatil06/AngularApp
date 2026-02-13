@@ -28,8 +28,5 @@
 
 </div>
 
-<app-add-device
-  *ngIf="showAddModal"
-  (close)="closeAddDevice()"
-  (save)="addDevice($event)">
+<app-add-device *ngIf="showAddModal" (close)="closeAddDevice()" (save)="addDevice($event)">
 </app-add-device>

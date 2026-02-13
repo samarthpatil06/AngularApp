@@ -2,9 +2,18 @@ const User = require("../models/User");
 const DeviceModel = require("../models/DeviceModel");
 
 const getDashboardSummary = async () => {
+
+    // ✅ Count ONLY normal users (exclude admin)
     const totalUsers = await User.countDocuments();
-    const activeUsers = await User.countDocuments({ isActive: true });
-    const inactiveUsers = await User.countDocuments({ isActive: false });
+
+    const activeUsers = await User.countDocuments({
+        isActive: true
+    });
+
+    const inactiveUsers = await User.countDocuments({
+        isActive: false
+    });
+
     const totalDeviceModels = await DeviceModel.countDocuments();
 
     return {

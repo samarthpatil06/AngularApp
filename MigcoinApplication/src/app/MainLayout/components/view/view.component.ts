@@ -13,7 +13,7 @@ export class ViewComponent {
   totalUsers: number | null = null;
   data: any;
 
-  constructor(private dashboardService: DashboardService) {}
+  constructor(private dashboardService: DashboardService) { }
 
   ngOnInit() {
     console.log('Component loaded');

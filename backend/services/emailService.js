@@ -30,174 +30,114 @@ const sendUserCreationEmail = async (userEmail, userName, verificationToken) => 
         subject: '🎉 Welcome! Activate Your Account',
         html: `
             <!DOCTYPE html>
-            <html>
-            <head>
-                <meta charset="UTF-8">
-                <meta name="viewport" content="width=device-width, initial-scale=1.0">
-                <style>
-                    * { margin: 0; padding: 0; box-sizing: border-box; }
-                    body { 
-                        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
-                        line-height: 1.6; 
-                        color: #333;
-                        background-color: #f4f4f4;
-                    }
-                    .email-wrapper {
-                        max-width: 600px;
-                        margin: 20px auto;
-                        background-color: #ffffff;
-                        border-radius: 8px;
-                        overflow: hidden;
-                        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-                    }
-                    .header {
-                        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-                        color: white;
-                        padding: 40px 30px;
-                        text-align: center;
-                    }
-                    .header h1 {
-                        font-size: 28px;
-                        margin-bottom: 10px;
-                    }
-                    .logo {
-                        width: 80px;
-                        height: 80px;
-                        background-color: white;
-                        border-radius: 50%;
-                        margin: 0 auto 20px;
-                        display: flex;
-                        align-items: center;
-                        justify-content: center;
-                        font-size: 40px;
-                    }
-                    .content {
-                        padding: 40px 30px;
-                    }
-                    .greeting {
-                        font-size: 20px;
-                        color: #667eea;
-                        margin-bottom: 20px;
-                    }
-                    .message {
-                        color: #555;
-                        margin-bottom: 30px;
-                        font-size: 15px;
-                    }
-                    .button-container {
-                        text-align: center;
-                        margin: 30px 0;
-                    }
-                    .activate-button {
-                        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-                        color: white !important;
-                        padding: 15px 40px;
-                        text-decoration: none;
-                        border-radius: 50px;
-                        display: inline-block;
-                        font-weight: bold;
-                        font-size: 16px;
-                        box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
-                        transition: all 0.3s;
-                    }
-                    .activate-button:hover {
-                        transform: translateY(-2px);
-                        box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
-                    }
-                    .info-box {
-                        background-color: #f8f9fa;
-                        border-left: 4px solid #667eea;
-                        padding: 15px;
-                        margin: 20px 0;
-                        border-radius: 4px;
-                    }
-                    .info-box p {
-                        margin: 5px 0;
-                        font-size: 14px;
-                    }
-                    .link-text {
-                        word-break: break-all;
-                        color: #667eea;
-                        font-size: 12px;
-                        margin-top: 20px;
-                    }
-                    .footer {
-                        background-color: #f8f9fa;
-                        padding: 30px;
-                        text-align: center;
-                        border-top: 1px solid #e9ecef;
-                    }
-                    .footer p {
-                        margin: 5px 0;
-                        font-size: 13px;
-                        color: #6c757d;
-                    }
-                    .social-links {
-                        margin: 20px 0;
-                    }
-                    .social-links a {
-                        display: inline-block;
-                        margin: 0 10px;
-                        color: #667eea;
-                        text-decoration: none;
-                    }
-                </style>
-            </head>
-            <body>
-                <div class="email-wrapper">
-                    <div class="header">
-                        <div class="logo">🚀</div>
-                        <h1>Welcome Aboard!</h1>
-                        <p>Your journey starts here</p>
+        <html>
+        <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Account Activation</title>
+        </head>
+        <body style="margin:0; padding:0; background-color:#f4f4f4; font-family:Segoe UI, Tahoma, Geneva, Verdana, sans-serif;">
+
+        <table width="100%" cellpadding="0" cellspacing="0" style="background-color:#f4f4f4; padding:20px 0;">
+            <tr>
+            <td align="center">
+
+                <!-- Main Container -->
+                <table width="600" cellpadding="0" cellspacing="0" style="background:#ffffff; border-radius:8px; overflow:hidden;">
+
+                <!-- Header -->
+                <tr>
+                    <td align="center" style="background-color:#667eea; padding:40px 30px; color:#ffffff;">
+                    <div style="font-size:40px; margin-bottom:15px;">🚀</div>
+                    <h1 style="margin:0; font-size:26px;">Welcome!</h1>
+                    <p style="margin-top:10px; font-size:14px;">Your journey starts here</p>
+                    </td>
+                </tr>
+
+                <!-- Content -->
+                <tr>
+                    <td style="padding:40px 30px; color:#333333;">
+
+                    <p style="font-size:18px; color:#667eea; margin-top:0;">
+                        Hello ${userName}! 👋
+                    </p>
+
+                    <p style="font-size:15px; color:#555555;">
+                        We're thrilled to have you join our platform! Your account has been successfully created, and you're just one click away from getting started.
+                    </p>
+
+                    <!-- Info Box -->
+                    <table width="100%" cellpadding="0" cellspacing="0" style="background:#f8f9fa; border-left:4px solid #667eea; margin:20px 0;">
+                        <tr>
+                        <td style="padding:15px; font-size:14px; color:#555;">
+                            <strong>⚡ Quick Info:</strong><br><br>
+                            📧 Email: ${userEmail}<br>
+                            🕒 Link expires in: 24 hours
+                        </td>
+                        </tr>
+                    </table>
+
+                    <!-- Button -->
+                    <table width="100%" cellpadding="0" cellspacing="0">
+                        <tr>
+                        <td align="center" style="padding:20px 0;">
+                            <table cellpadding="0" cellspacing="0">
+                            <tr>
+                                <td align="center" bgcolor="#667eea" style="border-radius:50px;">
+                                <a href="${activationLink}" 
+                                    style="display:inline-block; padding:15px 40px; font-size:16px; color:#ffffff; text-decoration:none; font-weight:bold;">
+                                    ✨ Activate My Account
+                                </a>
+                                </td>
+                            </tr>
+                            </table>
+                        </td>
+                        </tr>
+                    </table>
+
+                    <p style="font-size:15px; color:#555555;">
+                        <strong>Why activate?</strong>
+                    </p>
+
+                    <ul style="font-size:14px; color:#555555; padding-left:20px;">
+                        <li>Secure your account</li>
+                        <li>Access all features</li>
+                        <li>Start using our platform immediately</li>
+                    </ul>
+
+                    <!-- Fallback Link -->
+                    <p style="font-size:13px; color:#667eea; word-break:break-all; margin-top:20px;">
+                        <strong>Link not working?</strong><br>
+                        ${activationLink}
+                    </p>
+
+                    </td>
+                </tr>
+
+                <!-- Footer -->
+                <tr>
+                    <td align="center" style="background:#f8f9fa; padding:30px; font-size:13px; color:#6c757d;">
+                    If you didn't create this account, please ignore this email.<br><br>
+                    Need help? Contact our support team
+                    <div style="margin-top:15px;">
+                        <a href="#" style="color:#667eea; text-decoration:none;">Twitter</a> |
+                        <a href="#" style="color:#667eea; text-decoration:none;">Facebook</a> |
+                        <a href="#" style="color:#667eea; text-decoration:none;">LinkedIn</a>
                     </div>
-                    
-                    <div class="content">
-                        <div class="greeting">Hello ${userName}! 👋</div>
-                        
-                        <div class="message">
-                            <p>We're thrilled to have you join our platform! Your account has been successfully created, and you're just one click away from getting started.</p>
-                        </div>
-                        
-                        <div class="info-box">
-                            <p><strong>⚡ Quick Info:</strong></p>
-                            <p>📧 Email: ${userEmail}</p>
-                            <p>🕒 Link expires in: 24 hours</p>
-                        </div>
-                        
-                        <div class="button-container">
-                            <a href="${activationLink}" class="activate-button">
-                                ✨ Activate My Account
-                            </a>
-                        </div>
-                        
-                        <div class="message">
-                            <p><strong>Why activate?</strong></p>
-                            <ul style="margin-left: 20px; margin-top: 10px;">
-                                <li>Secure your account</li>
-                                <li>Access all features</li>
-                                <li>Start using our platform immediately</li>
-                            </ul>
-                        </div>
-                        
-                        <div class="link-text">
-                            <p><strong>Link not working?</strong> Copy and paste this URL into your browser:</p>
-                            <p>${activationLink}</p>
-                        </div>
-                    </div>
-                    
-                    <div class="footer">
-                        <p>If you didn't create this account, please ignore this email.</p>
-                        <p style="margin-top: 15px;">Need help? Contact our support team</p>
-                        <div class="social-links">
-                            <a href="#">Twitter</a> | 
-                            <a href="#">Facebook</a> | 
-                            <a href="#">LinkedIn</a>
-                        </div>
-                        <p style="margin-top: 15px; color: #adb5bd;">&copy; 2024 Your Company. All rights reserved.</p>
-                    </div>
-                </div>
-            </body>
-            </html>
+                    <p style="margin-top:15px; color:#adb5bd;">
+                        &copy; 2024 Your Company. All rights reserved.
+                    </p>
+                    </td>
+                </tr>
+
+                </table>
+
+            </td>
+            </tr>
+        </table>
+
+        </body>
+        </html>
         `
     };
 

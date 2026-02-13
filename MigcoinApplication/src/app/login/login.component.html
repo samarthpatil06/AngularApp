@@ -1,36 +1,47 @@
-<app-header></app-header>
 <div class="login-wrapper">
+
+  <div class="brand-container">
+    <div class="logo-bg">
+      <img src="assets/migcon_logo.png" alt="MIGCON Logo" class="logo" />
+    </div>
+  </div>
+
   <div class="login-card">
 
     <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
 
       <div class="form-group">
-        <span class="icon">👤</span>
-        <input type="email" placeholder="Email address" formControlName="email" />
+        <div class="input-wrapper">
+          <span class="icon">👤</span>
+          <input type="email" placeholder="Email address" formControlName="email" autocomplete="email" />
+        </div>
       </div>
 
       <div class="form-group password-field">
-        <span class="icon">🔒</span>
-        <input [type]="hidePassword ? 'password' : 'text'" placeholder="Password" formControlName="password" />
-        <button type="button" class="toggle-password" (click)="hidePassword = !hidePassword"
-          [attr.aria-label]="hidePassword ? 'Show password' : 'Hide password'">
-          <img [src]="hidePassword ? 'assets/show.png' : 'assets/hide.png'" alt="toggle password visibility"
-            class="password-icon" />
-        </button>
+        <div class="input-wrapper">
+          <span class="icon">🔒</span>
+          <input [type]="hidePassword ? 'password' : 'text'" placeholder="Password" formControlName="password"
+            autocomplete="current-password" />
+          <button type="button" class="toggle-password" (click)="hidePassword = !hidePassword"
+            [attr.aria-label]="hidePassword ? 'Show password' : 'Hide password'">
+            <img [src]="hidePassword ? 'assets/show.png' : 'assets/hide.png'" alt="toggle" class="password-icon" />
+          </button>
+        </div>
       </div>
 
       <div class="options">
-        <label class="checkbox">
+        <label class="checkbox-wrapper">
           <input type="checkbox" formControlName="rememberMe" />
-          <span class="smp">Save password</span>
+          <span class="custom-check"></span>
+          <span class="label-text">Save password</span>
         </label>
+
+        <a href="#" class="link">Forget Password?</a>
       </div>
 
       <button type="submit" class="btn primary">
         LOGIN
       </button>
-
-      <a href="#" class="link">Forget Password</a>
 
     </form>
 

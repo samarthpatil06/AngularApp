@@ -8,9 +8,10 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: #d1d5db;
+  // background-color: #d1d5db;
+  background: #9ca3af;
   padding: 0.5rem;
-  font-size: 0.75rem;
+  font-size: 1rem;
   font-weight: 600;
 }
 
@@ -20,7 +21,7 @@
   border: none;
   padding: 0.3rem 0.75rem;
   border-radius: 4px;
-  font-size: 0.7rem;
+  font-size: 0.8rem;
 }
 
 .empty {
@@ -32,9 +33,9 @@
 .table-header,
 .table-row {
   display: grid;
-  grid-template-columns: 2fr 1.2fr 1fr 1fr 1fr 0.8fr;
+  grid-template-columns: 1.5fr 1.5fr 1fr 1fr 1fr 0.8fr;
   gap: 0.5rem;
-  font-size: 0.7rem;
+  font-size: 0.8rem;
   padding: 0.5rem;
 }
 

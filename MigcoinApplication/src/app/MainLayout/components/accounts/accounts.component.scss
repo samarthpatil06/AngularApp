@@ -13,13 +13,16 @@
 .section-header {
   background: #9ca3af;
   padding: 0.4rem;
-  font-size: 0.75rem;
+  font-size: 1rem;
   font-weight: 600;
 }
 
 .user-header {
   display: flex;
   justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.5rem;
 }
 
 .info-grid {
@@ -43,16 +46,24 @@
   background: #475569;
   color: #fff;
   border: none;
-  font-size: 0.7rem;
-  padding: 0.2rem 0.6rem;
+  font-size: 0.8rem;
+  padding: 0.4rem 0.8rem;
+  cursor: pointer;
+  transition: background 0.2s;
+
+  &:hover {
+    background: #334155;
+  }
 }
 
 .table-header,
 .table-row {
   display: grid;
-  grid-template-columns: 2fr 2fr 1.5fr 1fr 0.5fr 1fr;
-  font-size: 0.7rem;
+  grid-template-columns: 1.5fr 1.5fr 1fr 1fr 0.5fr 1fr;
+  font-size: 1rem;
   padding: 0.4rem;
+  gap: 0.5rem;
+  align-items: center;
 }
 
 .table-header {
@@ -70,6 +81,13 @@
   border: none;
   color: #2563eb;
   font-size: 0.7rem;
+  cursor: pointer;
+  font-weight: 500;
+  padding: 0.3rem 0.5rem;
+
+  &:hover {
+    text-decoration: underline;
+  }
 }
 
 .status {
@@ -77,8 +95,200 @@
   height: 10px;
   display: inline-block;
   background: red;
+  border-radius: 50%;
 }
 
 .status.active {
   background: green;
+}
+
+// Add status-text styling
+.status-text {
+  display: inline-block;
+  font-weight: 600;
+  color: #dc2626; // Red for inactive
+}
+
+.status-text.active {
+  color: #16a34a; // Green for active
+}
+
+// Hide mobile labels on desktop
+.mobile-label {
+  display: none;
+}
+
+/* ===============================================
+   RESPONSIVE DESIGN - MOBILE
+   =============================================== */
+
+// Tablet breakpoint
+@media (max-width: 768px) {
+  .content {
+    padding: 0.5rem;
+  }
+
+  .section {
+    padding: 0.3rem;
+  }
+
+  .section-header {
+    font-size: 0.9rem;
+    padding: 0.5rem;
+  }
+
+  .add-btn {
+    font-size: 0.75rem;
+    padding: 0.35rem 0.7rem;
+  }
+
+  .table-header,
+  .table-row {
+    font-size: 0.85rem;
+    padding: 0.3rem;
+    gap: 0.3rem;
+  }
+}
+
+// Mobile breakpoint
+// Mobile breakpoint
+@media (max-width: 640px) {
+  .section {
+    padding: 0.4rem;
+  }
+
+  .section-header {
+    font-size: 0.9rem;
+    padding: 0.5rem 0.6rem;
+  }
+
+  .user-header {
+    span {
+      flex: 1;
+    }
+  }
+
+  .add-btn {
+    font-size: 0.75rem;
+    padding: 0.35rem 0.7rem;
+  }
+
+  // Hide table header on mobile
+  .table-header {
+    display: none;
+  }
+
+  // Convert table rows to cards with two-column layout
+  .table-row {
+    display: block;
+    padding: 0;
+    margin-bottom: 0.6rem;
+    border-radius: 0;
+    box-shadow: none;
+    background: #e5e7eb;
+    border: none;
+  }
+
+  // Two-column grid layout for labels and values
+  .table-row span {
+    display: grid;
+    grid-template-columns: 100px 1fr;
+    padding: 0.5rem 0.6rem;
+    margin-bottom: 0;
+    font-size: 0.85rem;
+    background: #fff;
+    border-bottom: 1px solid #e5e7eb;
+    align-items: center;
+
+    &:last-child {
+      border-bottom: none;
+    }
+  }
+
+  // Show mobile labels with desktop-matching colors
+  .mobile-label {
+    display: block;
+    font-weight: 600;
+    color: #374151;
+    margin-right: 0;
+    min-width: auto;
+    font-size: 0.8rem;
+  }
+
+  // Special styling for name field (first row)
+  .cell-name {
+    background: #d1d5db;
+    font-weight: 600;
+  }
+
+  .cell-action {
+    display: flex;
+    justify-content: flex-end;
+    grid-template-columns: 1fr;
+    padding: 0.6rem;
+    background: #e5e7eb;
+    border: none;
+  }
+
+  .edit-btn {
+    background: #475569;
+    color: #fff;
+    font-size: 0.75rem;
+    padding: 0.4rem 0.8rem;
+    border-radius: 3px;
+    font-weight: 600;
+    text-transform: uppercase;
+
+    &:hover {
+      background: #334155;
+      text-decoration: none;
+    }
+  }
+
+  .cell-status {
+    border-bottom: none !important;
+  }
+
+  .status {
+    display: none;
+  }
+
+  // ✅ Fix: Override grid for nested status-text span
+  .status-text {
+    display: inline !important; // Override the grid
+    grid-template-columns: unset !important;
+    padding: 0 !important;
+    background: transparent !important;
+    border: none !important;
+    font-size: 0.85rem;
+    font-weight: 400;
+  }
+}
+
+// Extra small mobile
+@media (max-width: 380px) {
+  .section-header {
+    font-size: 0.8rem;
+    padding: 0.4rem;
+  }
+
+  .add-btn {
+    font-size: 0.65rem;
+    padding: 0.25rem 0.5rem;
+  }
+
+  .table-row {
+    padding: 0.6rem;
+    font-size: 0.8rem;
+  }
+
+  .mobile-label {
+    min-width: 60px;
+    font-size: 0.8rem;
+  }
+
+  .edit-btn {
+    font-size: 0.75rem;
+    padding: 0.4rem 0.8rem;
+  }
 }

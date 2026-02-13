@@ -1,55 +1,145 @@
+/* --- Layout & Background --- */
 .login-wrapper {
-  min-height: 100vh;
-  padding-top: 70px; // Account for fixed header
+  min-height: 100dvh;
+  width: 100%;
+  padding: 1rem; // Minimized padding to let content float
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: #002b4f;
+  /* Original Blue */
+  box-sizing: border-box;
+  overflow-y: auto;
+}
+
+/* --- Interactive Logo Section --- */
+.brand-container {
+  margin-bottom: 2.5rem;
+  animation: floatDown 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
+  z-index: 2;
+}
+
+.logo-bg {
+  background-color: #ffffff;
+  padding: 15px 35px;
+  border-radius: 50px; // Smooth pill shape
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: #002b4f;
-  padding-left: 1rem;
-  padding-right: 1rem;
-  padding-bottom: 1rem;
-  box-sizing: border-box;
+
+  // "Breathing" Animation
+  animation: breathe 4s infinite ease-in-out;
+
+  .logo {
+    height: 50px; // To control the logo
+    width: auto;
+    object-fit: contain;
+    display: block;
+  }
 }
 
+@keyframes breathe {
+  0% {
+    transform: scale(1);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+  }
+
+  50% {
+    transform: scale(1.05);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+  }
+
+  // Subtle grow
+  100% {
+    transform: scale(1);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+  }
+}
+
+@keyframes floatDown {
+  from {
+    opacity: 0;
+    transform: translateY(-30px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* --- Card Styles --- */
 .login-card {
   width: 100%;
-  max-width: 420px;
-  background-color: rgba(255, 255, 255, 0.05);
+  max-width: 400px;
+
+  // Original Glass Red Tint
+  background-color: rgba(210, 11, 11, 0.05);
+
   padding: 2.5rem 2rem;
   border-radius: 24px;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-  backdrop-filter: blur(10px);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.25);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
   box-sizing: border-box;
+
+  // Entrance Animation
+  animation: slideUp 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
 }
 
-form {
-  width: 100%;
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
+/* --- Inputs with Interactive States --- */
 .form-group {
-  position: relative;
-  margin-bottom: 1.25rem;
+  margin-bottom: 1.5rem;
+
+  .input-wrapper {
+    position: relative;
+    transition: transform 0.2s ease;
+  }
+
+  // Lift input slightly on focus
+  &:focus-within .input-wrapper {
+    transform: translateY(-2px);
+  }
 
   input {
     width: 100%;
-    height: 50px;
-    border-radius: 25px;
+    height: 52px;
+    border-radius: 26px;
     border: 2px solid rgba(255, 255, 255, 0.1);
     background-color: rgba(255, 255, 255, 0.95);
     padding: 0 1.25rem 0 3rem;
-    font-size: 0.95rem;
+    font-size: 1rem;
     outline: none;
     box-sizing: border-box;
     transition: all 0.3s ease;
+    color: #333;
+    font-weight: 500;
 
+    // Active Glow State
     &:focus {
-      border-color: rgba(255, 255, 255, 0.3);
       background-color: #ffffff;
-      box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.1);
+      border-color: #ffffff;
+      box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.2); // Glowing ring
     }
 
     &::placeholder {
       color: #90a4ae;
+      font-weight: 400;
     }
   }
 
@@ -58,17 +148,21 @@ form {
     top: 50%;
     left: 1.25rem;
     transform: translateY(-50%);
-    font-size: 1.1rem;
+    font-size: 1.2rem;
     color: #607d8b;
-    pointer-events: none;
     z-index: 1;
+    transition: color 0.3s ease;
+  }
+
+  // Icon lights up when input is focused
+  &:focus-within .icon {
+    color: #002b4f; // Change to brand color on focus
+    opacity: 1;
   }
 }
 
-.password-field {
-  input {
-    padding-right: 3.5rem;
-  }
+.password-field input {
+  padding-right: 3.5rem;
 }
 
 .toggle-password {
@@ -79,238 +173,166 @@ form {
   background: none;
   border: none;
   cursor: pointer;
-  padding: 0.5rem;
-  line-height: 1;
+  padding: 5px;
+  border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  border-radius: 50%;
-  transition: background-color 0.2s ease;
+  transition: background 0.2s;
 
   &:hover {
     background-color: rgba(0, 0, 0, 0.05);
   }
 
-  &:active {
-    background-color: rgba(0, 0, 0, 0.1);
-  }
-
   .password-icon {
     width: 22px;
     height: 22px;
-    display: block;
-    object-fit: contain;
     opacity: 0.6;
-    transition: opacity 0.2s ease;
+    transition: opacity 0.2s;
   }
 
   &:hover .password-icon {
-    opacity: 0.8;
+    opacity: 1;
   }
 }
 
+/* --- Options Row --- */
 .options {
   display: flex;
   align-items: center;
-  justify-content: center;
-  margin: 0 0 1.75rem;
-
-  .checkbox {
-    display: flex;
-    align-items: center;
-    font-size: 1rem;
-    cursor: pointer;
-    user-select: none;
-
-    input {
-      margin-right: 0.6rem;
-      cursor: pointer;
-      width: 18px;
-      height: 18px;
-      accent-color: #ffffff;
-    }
-  }
+  justify-content: space-between;
+  margin: 0.5rem 0 2rem;
+  width: 100%;
+  padding: 0 5px;
 }
 
-.btn {
-  width: 100%;
-  height: 50px;
-  border-radius: 25px;
-  font-size: 0.95rem;
-  font-weight: 700;
-  letter-spacing: 1px;
-  border: none;
+/* Custom Checkbox Design */
+.checkbox-wrapper {
+  display: flex;
+  align-items: center;
   cursor: pointer;
-  margin-bottom: 1.5rem;
-  transition: all 0.3s ease;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  user-select: none;
 
-  &:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+  input {
+    display: none; // Hide default
   }
 
-  &:active {
-    transform: translateY(0);
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  .custom-check {
+    width: 18px;
+    height: 18px;
+    border: 2px solid rgba(255, 255, 255, 0.6);
+    border-radius: 5px;
+    margin-right: 8px;
+    position: relative;
+    transition: all 0.2s ease;
   }
 
-  &.primary {
+  // Checkmark tick
+  .custom-check:after {
+    content: '';
+    position: absolute;
+    display: none;
+    left: 5px;
+    top: 1px;
+    width: 4px;
+    height: 9px;
+    border: solid #002b4f;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+  }
+
+  // Checked State
+  input:checked~.custom-check {
     background-color: #ffffff;
-    color: #002b4f;
+    border-color: #ffffff;
+
+    &:after {
+      display: block;
+    }
   }
 
-  &.secondary {
-    background-color: #ffffff;
-    color: #002b4f;
+  .label-text {
+    color: #ffffff;
+    font-size: 0.9rem;
+    opacity: 0.9;
+  }
+
+  &:hover .label-text {
+    opacity: 1;
   }
 }
 
 .link {
-  display: block;
-  font-size: 1rem;
-  margin-bottom: 1.5rem;
+  font-size: 0.9rem;
   color: #ffffff;
   text-decoration: none;
-  text-align: center;
-  transition: opacity 0.2s ease;
-  border-bottom: 1px solid transparent;
+  opacity: 0.8;
+  transition: all 0.2s;
 
   &:hover {
-    opacity: 0.8;
-    border-bottom-color: #ffffff;
+    opacity: 1;
+    text-decoration: underline;
+    text-underline-offset: 4px;
   }
 }
 
-.footer-note {
-  font-size: 0.7rem;
-  opacity: 0.8;
-}
+/* --- Button --- */
+.btn {
+  width: 100%;
+  height: 52px;
+  border-radius: 26px;
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+  border: none;
+  cursor: pointer;
+  background-color: #ffffff;
+  color: #002b4f;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transform: translateY(0);
 
-.smp {
-  color: white;
-}
-
-/* Tablet Responsiveness */
-@media (max-width: 768px) {
-  .login-wrapper {
-    padding-top: 64px;
+  &:hover {
+    transform: translateY(-3px); // Lift effect
+    box-shadow: 0 8px 25px rgba(255, 255, 255, 0.3); // Glow effect
   }
 
-  .login-card {
-    max-width: 90%;
-    padding: 2rem 1.75rem;
+  &:active {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(255, 255, 255, 0.2);
   }
 }
 
-/* Mobile Responsiveness */
+/* --- Mobile / Keyboard Handling --- */
 @media (max-width: 480px) {
-  .login-wrapper {
-    padding-top: 56px;
-    padding-left: 0.75rem;
-    padding-right: 0.75rem;
-  }
-
   .login-card {
-    max-width: 100%;
-    padding: 1.75rem 1.5rem;
-    border-radius: 20px;
+    padding: 2rem 1.5rem;
   }
 
-  .form-group {
+  .logo-bg {
+    padding: 12px 30px;
+
+    .logo {
+      height: 50px; // To control the logo
+    }
+  }
+}
+
+@media (max-height: 550px) {
+  .login-wrapper {
+    padding-top: 1rem;
+    justify-content: flex-start; // Stick to top when keyboard opens
+  }
+
+  .brand-container {
     margin-bottom: 1rem;
 
-    input {
-      height: 46px;
-      font-size: 0.9rem;
-      padding: 0 1rem 0 2.75rem;
+    // Stop animation when keyboard is open to save resources/distraction
+    animation: none;
+
+    .logo-bg {
+      animation: none;
+      transform: scale(0.9);
     }
-
-    .icon {
-      left: 1rem;
-      font-size: 1rem;
-    }
-  }
-
-  .password-field input {
-    padding-right: 3rem;
-  }
-
-  .toggle-password {
-    right: 1rem;
-    padding: 0.4rem;
-
-    .password-icon {
-      width: 20px;
-      height: 20px;
-    }
-  }
-
-  .options {
-    margin: 0 0 1.5rem;
-
-    .checkbox {
-      font-size: 0.8rem;
-
-      input {
-        width: 16px;
-        height: 16px;
-      }
-    }
-  }
-
-  .btn {
-    height: 46px;
-    font-size: 0.9rem;
-    margin-bottom: 1.25rem;
-  }
-
-  .link {
-    font-size: 0.8rem;
-  }
-}
-
-/* Small Mobile Devices */
-@media (max-width: 360px) {
-  .login-wrapper {
-    padding-top: 52px;
-    padding-left: 0.5rem;
-    padding-right: 0.5rem;
-  }
-
-  .login-card {
-    padding: 1.5rem 1.25rem;
-    border-radius: 18px;
-  }
-
-  .form-group input {
-    height: 44px;
-    font-size: 0.85rem;
-  }
-
-  .btn {
-    height: 44px;
-    font-size: 0.85rem;
-  }
-}
-
-/* Extra Small Mobile */
-@media (max-width: 320px) {
-  .login-wrapper {
-    padding-top: 48px;
-  }
-
-  .login-card {
-    padding: 1.25rem 1rem;
-  }
-
-  .form-group input {
-    height: 42px;
-    font-size: 0.8rem;
-  }
-
-  .btn {
-    height: 42px;
-    font-size: 0.8rem;
   }
 }

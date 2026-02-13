@@ -27,6 +27,7 @@ const DB_URI = process.env.MONGO_URI;
 // ========================================
 app.use(cors());
 app.use(express.json());
+app.use("/api/dashboard", require("./routes/dashboard.route"));
 // app.use("/api", subscriptionRoutes); // Subscription routes
 
 // ========================================
@@ -132,8 +133,23 @@ app.post('/api/superuser/create', async (req, res) => {
  */
 app.get('/api/users', async (req, res) => {
   try {
-    const users = await User.find({}, { password: 0 });
-    console.log('✅ Fetched users:', users);
+    const { search } = req.query;
+    let query = {};
+
+    if (search) {
+      const searchRegex = new RegExp(search, 'i'); // Case-insensitive regex
+      query = {
+        $or: [
+          { firstName: searchRegex },
+          { lastName: searchRegex },
+          { email: searchRegex },
+          { phone: searchRegex }
+        ]
+      };
+    }
+
+    const users = await User.find(query, { password: 0 });
+    console.log(`✅ Fetched users with search "${search || 'ALL'}":`, users.length);
     res.status(200).json(users);
   } catch (error) {
     console.error('❌ Error fetching users:', error);
@@ -153,7 +169,7 @@ app.post('/api/users', async (req, res) => {
   try {
     console.log('🔵 Raw request body:', JSON.stringify(req.body, null, 2));
 
-    const { firstName, lastName, email, phone, role, password } = req.body;
+    const { firstName, lastName, email, phone, role, plan, password } = req.body;
 
     // Validation
     if (!firstName || !email || !password) {
@@ -182,6 +198,7 @@ app.post('/api/users', async (req, res) => {
       phone: phone || '',
       password: password,
       role: role || 'User',
+      plan: req.body.plan || 'basic',
       isActive: false,
       isEmailVerified: false,
       emailVerificationToken: verificationToken,
@@ -371,7 +388,7 @@ app.post('/api/users/resend-verification', async (req, res) => {
 app.put('/api/users/:id', async (req, res) => {
   try {
     const { id } = req.params;
-    const { firstName, lastName, email, phone, role, isActive } = req.body;
+    const { firstName, lastName, email, phone, role, plan, isActive } = req.body;
 
     const user = await User.findByIdAndUpdate(
       id,
@@ -381,6 +398,7 @@ app.put('/api/users/:id', async (req, res) => {
         email,
         phone,
         role,
+        plan,
         isActive
       },
       { new: true }
@@ -721,6 +739,9 @@ app.get('/api/test', (req, res) => {
 // ========================================
 // SERVER START
 // ========================================
-app.listen(PORT, () => {
-  console.log(`🚀 Backend is running on port ${PORT}`);
+// app.listen(PORT, () => {
+//   console.log(`🚀 Backend is running on port ${PORT}`);
+// });
+app.listen(3000, '0.0.0.0', () => {
+  console.log('Server running');
 });

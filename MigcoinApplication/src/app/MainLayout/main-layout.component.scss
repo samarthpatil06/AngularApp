@@ -1,0 +1,32 @@
+:host {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    overflow: hidden;
+}
+
+app-header,
+app-navbar {
+    display: block;
+    width: 100%;
+    flex: 0 0 auto;
+    /* Don't grow or shrink */
+    z-index: 10;
+    /* Ensure shadows appear over content */
+    position: relative;
+}
+
+app-header {
+    z-index: 20;
+    /* Header stays above navbar */
+}
+
+.layout-content {
+    width: 100%;
+    flex: 1;
+    /* Take remaining space */
+    overflow-y: auto;
+    /* Scroll internally */
+    display: block;
+    /* padding-top is no longer needed */
+}

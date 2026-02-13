@@ -8,6 +8,16 @@
     <input placeholder="EMAIL" [(ngModel)]="user.email">
     <input placeholder="PHONE" [(ngModel)]="user.phone">
 
+    <!-- Subscription Plan -->
+    <div class="sub-title">SUBSCRIPTION PLAN</div>
+
+    <select [(ngModel)]="user.plan">
+      <option value="">Select Plan</option>
+      <option value="basic">Basic (1 Month)</option>
+      <option value="pro">Pro (6 Months)</option>
+      <option value="premium">Premium (1 Year)</option>
+    </select>
+    
     <div class="sub-title">SET LOGIN CREDENTIAL</div>
 
     <input type="password" placeholder="NEW PASSWORD" [(ngModel)]="password">

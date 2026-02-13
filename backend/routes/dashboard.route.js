@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const { getDashboardSummary } = require("../utils/dashboard.utils");
+const { getDashboardSummary } = require("../services/dashboard.service");
 
 router.get("/summary", async (req, res) => {
     try {

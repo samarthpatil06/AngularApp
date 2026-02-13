@@ -12,8 +12,12 @@ export class UserService {
 
   constructor(private http: HttpClient) { }
 
-  getUsers(): Observable<any> {
-    return this.http.get<any>(this.apiUrl);
+  getUsers(search?: string): Observable<any> {
+    let url = this.apiUrl;
+    if (search) {
+      url += `?search=${search}`;
+    }
+    return this.http.get<any>(url);
   }
 
   addUser(user: any): Observable<any> {

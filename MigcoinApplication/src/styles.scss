@@ -5,7 +5,8 @@
   box-sizing: border-box;
 }
 
-html, body {
+html,
+body {
   margin: 0;
   padding: 0;
   width: 100%;
@@ -21,8 +22,14 @@ html, body {
   --navbar-height: 56px;
 }
 
-@media (max-width: 480px) {
+@media (max-width: 768px) {
   :root {
     --header-height: 64px;
+  }
+}
+
+@media (max-width: 480px) {
+  :root {
+    --header-height: 56px;
   }
 }

@@ -33,6 +33,11 @@ const userSchema = new mongoose.Schema(
       enum: ['Admin', 'User'],
       default: 'User'
     },
+    plan: {
+      type: String,
+      enum: ['basic', 'pro', 'premium'],
+      default: ''
+    },
     isActive: {
       type: Boolean,
       default: false

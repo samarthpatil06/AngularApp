@@ -3,12 +3,12 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AuthService } from '../services/auth.service';
 import { Router } from '@angular/router';
-import { HeaderComponent } from '../MainLayout/header/header.component';
+// Removed HeaderComponent import to keep this page isolated
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [ReactiveFormsModule,CommonModule,HeaderComponent],
+  imports: [ReactiveFormsModule, CommonModule], // Removed HeaderComponent
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss'
 })
@@ -16,7 +16,7 @@ export class LoginComponent {
   loginForm: FormGroup;
   hidePassword = true;
 
-  constructor(private fb: FormBuilder,private authService:AuthService, private router:Router) {
+  constructor(private fb: FormBuilder, private authService: AuthService, private router: Router) {
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', Validators.required],
@@ -31,9 +31,8 @@ export class LoginComponent {
       .subscribe({
         next: (res) => {
           this.authService.saveUser(res);
-
           if (res.role === 'SUPERUSER') {
-            this.router.navigate(['/dashboard']);
+            this.router.navigate(['/view']);
           } else {
             this.router.navigate(['/view']);
           }

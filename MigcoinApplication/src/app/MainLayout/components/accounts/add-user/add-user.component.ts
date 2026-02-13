@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { HttpClient } from '@angular/common/http'; // Import HttpClient for API calls
 
 export interface User {
   firstName: string;
@@ -10,6 +11,7 @@ export interface User {
   role: 'Admin' | 'User';
   password: string;
   isActive: boolean;
+  plan: string; // Subscription plan (basic, pro, premium)
 }
 
 @Component({
@@ -33,7 +35,8 @@ export class AddUserComponent {
     phone: '',
     role: 'User',
     password: '',
-    isActive: false  // Will be activated via email
+    isActive: false,  // Will be activated via email
+    plan: ''  // Subscription plan (basic, pro, premium)
   };
 
   onSave(): void {
@@ -86,7 +89,8 @@ export class AddUserComponent {
       phone: '',
       role: 'User',
       password: '',
-      isActive: false
+      isActive: false,
+      plan: ''
     };
     this.password = '';
     this.confirmPassword = '';
