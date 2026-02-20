@@ -23,6 +23,7 @@ export class NavbarComponent implements OnInit {
   showResults = false;
 
   menuItems: { label: string, route: string | null }[] = [
+    { label: 'System Overview', route: '/view' },
     { label: 'Manage Account', route: '/accounts' },
     { label: 'Manage Devices', route: '/devices' },
     { label: 'Settings', route: '/settings' },
