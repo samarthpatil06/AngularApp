@@ -1,1 +1,17 @@
-<router-outlet></router-outlet>
+﻿<router-outlet></router-outlet>
+
+<div *ngIf="showInstallBanner" class="pwa-install-banner" role="region" aria-label="Install app prompt">
+  <p>Install {{ title }} for the best experience</p>
+  <div class="banner-actions">
+    <button type="button" class="install-btn" (click)="installApp()">Install</button>
+    <button type="button" class="dismiss-btn" aria-label="Dismiss install prompt" (click)="dismissInstallPrompt()">x</button>
+  </div>
+</div>
+
+<div *ngIf="showIosInstallHelp" class="pwa-ios-install-modal" role="dialog" aria-label="iOS install instructions" aria-modal="true">
+  <div class="ios-card">
+    <button type="button" class="dismiss-btn" aria-label="Close instructions" (click)="dismissInstallPrompt()">x</button>
+    <h3>Install {{ title }}</h3>
+    <p>Tap the Share icon then "Add to Home Screen".</p>
+  </div>
+</div>

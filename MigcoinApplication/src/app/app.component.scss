@@ -1,5 +1,115 @@
-:host {
+﻿:host {
   display: block;
   min-height: 100vh;
   background-color: #002b4f;
+}
+
+.pwa-install-banner {
+  position: fixed;
+  left: 16px;
+  right: 16px;
+  bottom: calc(16px + env(safe-area-inset-bottom));
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 12px 14px;
+  border-radius: 12px;
+  background: rgba(0, 24, 45, 0.96);
+  color: #ffffff;
+  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.28);
+}
+
+.pwa-install-banner p {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+.banner-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.install-btn,
+.dismiss-btn {
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 13px;
+  line-height: 1;
+}
+
+.install-btn {
+  padding: 10px 14px;
+  background: #19b5fe;
+  color: #06253f;
+  font-weight: 700;
+}
+
+.dismiss-btn {
+  width: 30px;
+  height: 30px;
+  background: rgba(255, 255, 255, 0.18);
+  color: #ffffff;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.pwa-ios-install-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 1001;
+  display: grid;
+  place-items: center;
+  background: rgba(0, 0, 0, 0.6);
+  padding: 16px;
+}
+
+.ios-card {
+  position: relative;
+  width: min(420px, 100%);
+  border-radius: 14px;
+  background: #ffffff;
+  color: #112d45;
+  padding: 20px;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.35);
+}
+
+.ios-card h3 {
+  margin: 0 36px 8px 0;
+  font-size: 20px;
+}
+
+.ios-card p {
+  margin: 0;
+  font-size: 15px;
+  line-height: 1.5;
+}
+
+.ios-card .dismiss-btn {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background: #0a3554;
+}
+
+@media (display-mode: standalone) {
+  .pwa-install-banner,
+  .pwa-ios-install-modal {
+    display: none !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .pwa-install-banner {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .banner-actions {
+    align-self: flex-end;
+  }
 }
