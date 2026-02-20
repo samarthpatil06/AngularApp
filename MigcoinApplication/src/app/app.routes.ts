@@ -1,23 +1,29 @@
 import { Routes } from '@angular/router';
 
 export const routes: Routes = [
-
-  // 🔁 Default redirect
   {
     path: '',
     redirectTo: 'login',
     pathMatch: 'full'
   },
-
-  // 🔐 Login (NO layout)
   {
     path: 'login',
     loadComponent: () =>
       import('./login/login.component')
         .then(m => m.LoginComponent)
   },
-
-  // 🔓 Public activation routes (NO layout, NO auth)
+  {
+    path: 'forgot-password',
+    loadComponent: () =>
+      import('./forgot-password/forgot-password.component')
+        .then(m => m.ForgotPasswordComponent)
+  },
+  {
+    path: 'reset-password',
+    loadComponent: () =>
+      import('./reset-password/reset-password.component')
+        .then(m => m.ResetPasswordComponent)
+  },
   {
     path: 'activate-account',
     loadComponent: () =>
@@ -30,15 +36,12 @@ export const routes: Routes = [
       import('./MainLayout/components/activate-device/activate-device.component')
         .then(m => m.ActivateDeviceComponent)
   },
-
-  // 🧱 Main layout (HEADER + NAVBAR)
   {
     path: '',
     loadComponent: () =>
       import('./MainLayout/main-layout.component')
         .then(m => m.MainLayoutComponent),
     children: [
-
       {
         path: 'dashboard',
         data: { title: 'Dashboard' },
@@ -46,7 +49,6 @@ export const routes: Routes = [
           import('./MainLayout/components/dashboard/dashboard.component')
             .then(m => m.DashboardComponent)
       },
-
       {
         path: 'view',
         data: { title: 'View' },
@@ -54,7 +56,6 @@ export const routes: Routes = [
           import('./MainLayout/components/view/view.component')
             .then(m => m.ViewComponent)
       },
-
       {
         path: 'devices',
         data: { title: 'Manage Devices' },
@@ -62,7 +63,6 @@ export const routes: Routes = [
           import('./MainLayout/components/devices/devices.component')
             .then(m => m.DevicesComponent)
       },
-
       {
         path: 'accounts',
         data: { title: 'Manage Account' },
@@ -84,7 +84,6 @@ export const routes: Routes = [
           import('./MainLayout/components/help/help.component')
             .then(m => m.HelpComponent)
       },
-
       {
         path: 'device-list',
         data: { title: 'Device Models List' },

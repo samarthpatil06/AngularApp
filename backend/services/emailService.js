@@ -10,6 +10,8 @@ const transporter = nodemailer.createTransport({
     }
 });
 
+const getFrontendUrl = () => process.env.FRONTEND_URL || 'http://localhost:4200';
+
 // 🔥 Generate secure verification token
 const generateVerificationToken = () => {
     return crypto.randomBytes(32).toString('hex');
@@ -22,7 +24,7 @@ const getTokenExpiration = () => {
 
 // Email template for User Account Creation with Token
 const sendUserCreationEmail = async (userEmail, userName, verificationToken) => {
-    const activationLink = `${process.env.FRONTEND_URL}/activate-account?token=${verificationToken}&email=${encodeURIComponent(userEmail)}`;
+    const activationLink = `${getFrontendUrl()}/activate-account?token=${verificationToken}&email=${encodeURIComponent(userEmail)}`;
 
     const mailOptions = {
         from: `"Your Company" <${process.env.EMAIL_USER}>`,
@@ -154,7 +156,7 @@ const sendUserCreationEmail = async (userEmail, userName, verificationToken) => 
 
 // Email template for Device Activation with Token
 const sendDeviceActivationEmail = async (userEmail, userName, deviceData, activationToken) => {
-    const activationLink = `${process.env.FRONTEND_URL}/activate-device?token=${activationToken}&deviceId=${deviceData.modelCode}`;
+    const activationLink = `${getFrontendUrl()}/activate-device?token=${activationToken}&deviceId=${deviceData.modelCode}`;
 
     const mailOptions = {
         from: `"Your Company" <${process.env.EMAIL_USER}>`,
@@ -366,11 +368,46 @@ const resendDeviceActivationEmail = async (userEmail, userName, deviceData, acti
     return await sendDeviceActivationEmail(userEmail, userName, deviceData, activationToken);
 };
 
+const sendPasswordResetEmail = async (userEmail, userName, resetToken) => {
+    const resetLink = `${getFrontendUrl()}/reset-password?token=${resetToken}&email=${encodeURIComponent(userEmail)}`;
+
+    const mailOptions = {
+        from: `"Your Company" <${process.env.EMAIL_USER}>`,
+        to: userEmail,
+        subject: 'Reset Your Password',
+        html: `
+            <div style="font-family:Segoe UI,Arial,sans-serif;max-width:600px;margin:0 auto;padding:20px;">
+                <h2 style="color:#1f2937;">Password Reset Request</h2>
+                <p>Hello ${userName || 'User'},</p>
+                <p>We received a request to reset your password.</p>
+                <p>
+                    <a href="${resetLink}" style="display:inline-block;padding:12px 20px;background:#334155;color:#fff;text-decoration:none;border-radius:6px;">
+                        Reset Password
+                    </a>
+                </p>
+                <p>This link expires in 30 minutes.</p>
+                <p>If you did not request this, you can ignore this email.</p>
+                <p style="word-break:break-all;color:#2563eb;">${resetLink}</p>
+            </div>
+        `
+    };
+
+    try {
+        const info = await transporter.sendMail(mailOptions);
+        console.log('✅ Password reset email sent to:', userEmail);
+        return { success: true, messageId: info.messageId };
+    } catch (error) {
+        console.error('❌ Error sending password reset email:', error);
+        return { success: false, error: error.message };
+    }
+};
+
 module.exports = {
     generateVerificationToken,
     getTokenExpiration,
     sendUserCreationEmail,
     sendDeviceActivationEmail,
+    sendPasswordResetEmail,
     resendUserVerificationEmail,
     resendDeviceActivationEmail
 };

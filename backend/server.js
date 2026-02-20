@@ -380,6 +380,112 @@ app.post('/api/users/resend-verification', async (req, res) => {
   }
 });
 
+// ==========================================
+// FORGOT PASSWORD
+// ==========================================
+app.post('/api/users/forgot-password', async (req, res) => {
+  try {
+    const { email } = req.body;
+
+    if (!email) {
+      return res.status(400).json({
+        success: false,
+        message: 'Email is required'
+      });
+    }
+
+    const user = await User.findOne({ email });
+
+    // Keep response generic to avoid account enumeration
+    if (!user) {
+      return res.status(200).json({
+        success: true,
+        message: 'If an account exists with this email, a reset link has been sent.'
+      });
+    }
+
+    const resetToken = emailService.generateVerificationToken();
+    const resetExpires = new Date(Date.now() + 30 * 60 * 1000); // 30 minutes
+
+    user.passwordResetToken = resetToken;
+    user.passwordResetExpires = resetExpires;
+    await user.save();
+
+    const userName = `${user.firstName} ${user.lastName}`.trim();
+    const emailResult = await emailService.sendPasswordResetEmail(
+      user.email,
+      userName,
+      resetToken
+    );
+
+    return res.status(200).json({
+      success: true,
+      message: 'If an account exists with this email, a reset link has been sent.',
+      emailSent: emailResult.success
+    });
+  } catch (error) {
+    console.error('❌ Forgot password error:', error);
+    return res.status(500).json({
+      success: false,
+      message: 'Failed to process forgot password request',
+      error: error.message
+    });
+  }
+});
+
+// ==========================================
+// RESET PASSWORD
+// ==========================================
+app.post('/api/users/reset-password', async (req, res) => {
+  try {
+    const { email, token, newPassword } = req.body;
+
+    if (!email || !token || !newPassword) {
+      return res.status(400).json({
+        success: false,
+        message: 'Email, token and new password are required'
+      });
+    }
+
+    if (newPassword.length < 6) {
+      return res.status(400).json({
+        success: false,
+        message: 'Password must be at least 6 characters'
+      });
+    }
+
+    const user = await User.findOne({
+      email,
+      passwordResetToken: token,
+      passwordResetExpires: { $gt: Date.now() }
+    });
+
+    if (!user) {
+      return res.status(400).json({
+        success: false,
+        message: 'Invalid or expired reset link'
+      });
+    }
+
+    user.password = newPassword;
+    user.passwordResetToken = null;
+    user.passwordResetExpires = null;
+    await user.save();
+
+    return res.status(200).json({
+      success: true,
+      message: 'Password reset successful. You can now login.'
+    });
+  } catch (error) {
+    console.error('❌ Reset password error:', error);
+    return res.status(500).json({
+      success: false,
+      message: 'Failed to reset password',
+      error: error.message
+    });
+  }
+});
+
 /**
  * UPDATE USER
  * PUT /api/users/:id

@@ -18,6 +18,14 @@ export class AuthService {
     return this.http.post<any>(`${this.apiUrl}/superuser/login`, credentials);
   }
 
+  forgotPassword(email: string) {
+    return this.http.post<any>(`${this.apiUrl}/users/forgot-password`, { email });
+  }
+
+  resetPassword(payload: { email: string; token: string; newPassword: string }) {
+    return this.http.post<any>(`${this.apiUrl}/users/reset-password`, payload);
+  }
+
 
   saveUser(user: any) {
     localStorage.setItem('user', JSON.stringify(user));
