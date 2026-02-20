@@ -1,0 +1,29 @@
+.content {
+  min-height: calc(100vh - 128px);
+  background: #f3f4f6;
+  padding: 0.75rem;
+}
+
+.section-header {
+  background: #9ca3af;
+  padding: 0.5rem;
+  font-size: 1rem;
+  font-weight: 600;
+  margin-bottom: 0.75rem;
+}
+
+.help-card {
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  padding: 1rem;
+}
+
+.help-card h3 {
+  margin: 0 0 0.5rem;
+  font-size: 1rem;
+}
+
+.help-card p {
+  margin: 0;
+  color: #4b5563;
+}

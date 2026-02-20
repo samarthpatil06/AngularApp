@@ -1,0 +1,56 @@
+.content {
+  min-height: calc(100vh - 128px);
+  background: #f3f4f6;
+  padding: 0.75rem;
+}
+
+.section-header {
+  background: #9ca3af;
+  padding: 0.5rem;
+  font-size: 1rem;
+  font-weight: 600;
+  margin-bottom: 0.75rem;
+}
+
+.settings-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.75rem;
+}
+
+.setting-card {
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  padding: 1rem;
+}
+
+.setting-card h3 {
+  margin: 0 0 0.4rem;
+  font-size: 1rem;
+  color: #111827;
+}
+
+.setting-card p {
+  margin: 0 0 0.75rem;
+  color: #4b5563;
+  font-size: 0.9rem;
+}
+
+.edit-btn {
+  background: #475569;
+  color: #fff;
+  border: none;
+  font-size: 0.75rem;
+  padding: 0.4rem 0.8rem;
+  cursor: pointer;
+}
+
+.edit-btn:hover {
+  background: #334155;
+}
+
+@media (max-width: 768px) {
+  .settings-grid {
+    grid-template-columns: 1fr;
+  }
+}

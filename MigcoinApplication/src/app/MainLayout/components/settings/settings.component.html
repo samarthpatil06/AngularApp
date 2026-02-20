@@ -1,0 +1,13 @@
+<div class="content">
+  <div class="section-header">
+    <span>SETTINGS</span>
+  </div>
+
+  <div class="settings-grid">
+    <div class="setting-card" *ngFor="let item of settings">
+      <h3>{{ item.title }}</h3>
+      <p>{{ item.description }}</p>
+      <button type="button" class="edit-btn">CONFIGURE</button>
+    </div>
+  </div>
+</div>

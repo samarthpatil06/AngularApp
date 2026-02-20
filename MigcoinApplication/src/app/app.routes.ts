@@ -70,6 +70,20 @@ export const routes: Routes = [
           import('./MainLayout/components/accounts/accounts.component')
             .then(m => m.AccountsComponent)
       },
+      {
+        path: 'settings',
+        data: { title: 'Settings' },
+        loadComponent: () =>
+          import('./MainLayout/components/settings/settings.component')
+            .then(m => m.SettingsComponent)
+      },
+      {
+        path: 'help',
+        data: { title: 'Help' },
+        loadComponent: () =>
+          import('./MainLayout/components/help/help.component')
+            .then(m => m.HelpComponent)
+      },
 
       {
         path: 'device-list',
