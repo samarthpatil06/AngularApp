@@ -27,7 +27,7 @@ const DB_URI = process.env.MONGO_URI;
 // ========================================
 app.use(cors());
 app.use(express.json());
-app.use("/api/dashboard", require("./routes/dashboard.route"));
+app.use("/api/dashboard", require("./routes/dashboard.route")); // Dashboard routes
 // app.use("/api", subscriptionRoutes); // Subscription routes
 
 // ========================================

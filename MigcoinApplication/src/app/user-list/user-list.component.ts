@@ -6,8 +6,8 @@ import { DeviceModelService } from '../services/device-model.service';
     selector: 'app-device-list',
     standalone: true, // Mark as standalone
     imports: [CommonModule], // Import CommonModule here
-    templateUrl: './device-list.component.html',
-    styleUrls: ['./device-list.component.scss'] // Remove if you don't have a CSS file
+    templateUrl: './user-list.component.html',
+    styleUrls: ['./user-list.component.scss'] // Remove if you don't have a CSS file
 })
 export class DeviceListComponent implements OnInit {
 
